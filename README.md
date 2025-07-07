@@ -37,6 +37,16 @@ async function main() {
 main()
 ```
 
+Or use a specific variant like PrimJS for enhanced debugging:
+
+```typescript
+import { newQuickJSWASMModuleFromVariant } from "quickjs-emscripten-core"
+import primjsVariant from "@jitl/primjs-wasmfile-release-sync"
+
+const QuickJS = await newQuickJSWASMModuleFromVariant(primjsVariant)
+// Now use QuickJS as usual, but with PrimJS's optimizations
+```
+
 [github]: https://github.com/justjake/quickjs-emscripten
 [npm]: https://www.npmjs.com/package/quickjs-emscripten
 [api]: https://github.com/justjake/quickjs-emscripten/blob/main/doc/packages.md
@@ -68,6 +78,7 @@ main()
       - [Reducing package size](#reducing-package-size)
       - [WebAssembly loading](#webassembly-loading)
       - [quickjs-ng](#quickjs-ng)
+      - [PrimJS](#primjs)
       - [Using in the browser without a build step](#using-in-the-browser-without-a-build-step)
     - [Debugging](#debugging)
     - [Supported Platforms](#supported-platforms)
@@ -711,6 +722,18 @@ const cloudflareVariant = newVariant(baseVariant, {
 [quickjs-ng/quickjs](https://github.com/quickjs-ng/quickjs) (aka quickjs-ng) is a fork of the original [bellard/quickjs](https://github.com/quickjs-ng/quickjs) under active development. It implements more EcmaScript standards and removes some of quickjs's custom language features like BigFloat.
 
 There are several variants of quickjs-ng available, and quickjs-emscripten may switch to using quickjs-ng by default in the future. See [the list of variants][core].
+
+#### PrimJS
+
+[PrimJS](https://github.com/lynx-family/primjs) is a QuickJS derivative optimized for the Lynx framework, offering better performance and Chrome DevTools support. It has been integrated as a third JavaScript engine option alongside QuickJS and QuickJS-NG.
+
+Key features of PrimJS:
+- Chrome DevTools integration capability for debugging
+- Optimized garbage collector for long-running applications
+- Enhanced performance for Lynx framework use cases
+- 100% compatible with quickjs-emscripten API
+
+To use PrimJS, install one of the PrimJS variants (e.g., `@jitl/primjs-wasmfile-release-sync`) and pass it to `newQuickJSWASMModuleFromVariant`. See the [PrimJS How-To Guide](./PRIMJS_HOWTO.md) for detailed usage instructions and the [list of variants][core] for all available PrimJS packages.
 
 #### Using in the browser without a build step
 
