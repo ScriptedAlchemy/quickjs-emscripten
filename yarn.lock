@@ -5690,14 +5690,14 @@ __metadata:
 
 "quickjs-emscripten@file:../quickjs-emscripten::locator=%40jitl%2Fprimjs-wasmfile-release-sync%40workspace%3Apackages%2Fvariant-primjs-wasmfile-release-sync":
   version: 0.31.0
-  resolution: "quickjs-emscripten@file:../quickjs-emscripten#../quickjs-emscripten::hash=5822ad&locator=%40jitl%2Fprimjs-wasmfile-release-sync%40workspace%3Apackages%2Fvariant-primjs-wasmfile-release-sync"
+  resolution: "quickjs-emscripten@file:../quickjs-emscripten#../quickjs-emscripten::hash=a80bc9&locator=%40jitl%2Fprimjs-wasmfile-release-sync%40workspace%3Apackages%2Fvariant-primjs-wasmfile-release-sync"
   dependencies:
     "@jitl/quickjs-wasmfile-debug-asyncify": "workspace:*"
     "@jitl/quickjs-wasmfile-debug-sync": "workspace:*"
     "@jitl/quickjs-wasmfile-release-asyncify": "workspace:*"
     "@jitl/quickjs-wasmfile-release-sync": "workspace:*"
     quickjs-emscripten-core: "workspace:*"
-  checksum: cdedba1cda648e20d1fb1b661fb8eab906c486f16faad9362676991a31d812590f8aa4dbeeab369dac30de8cea4d4a8ffba5cb3ef2133146d16c78c22649e421
+  checksum: e3f76252ac637ab19a726af5f4a2989a68eb34d76204abdc1e02f2b45a781663bf4fc51805badde7e55e4a4d04240f23a0ca33f574e51b475eb9040c3f18c284
   languageName: node
   linkType: hard
 
