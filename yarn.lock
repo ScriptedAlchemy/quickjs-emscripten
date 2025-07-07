@@ -613,6 +613,135 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jitl/primjs-singlefile-browser-debug-asyncify@workspace:packages/variant-primjs-singlefile-browser-debug-asyncify":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-singlefile-browser-debug-asyncify@workspace:packages/variant-primjs-singlefile-browser-debug-asyncify"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-singlefile-browser-debug-sync@workspace:packages/variant-primjs-singlefile-browser-debug-sync":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-singlefile-browser-debug-sync@workspace:packages/variant-primjs-singlefile-browser-debug-sync"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-singlefile-browser-release-asyncify@workspace:packages/variant-primjs-singlefile-browser-release-asyncify":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-singlefile-browser-release-asyncify@workspace:packages/variant-primjs-singlefile-browser-release-asyncify"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-singlefile-browser-release-sync@workspace:packages/variant-primjs-singlefile-browser-release-sync":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-singlefile-browser-release-sync@workspace:packages/variant-primjs-singlefile-browser-release-sync"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-singlefile-cjs-debug-asyncify@workspace:packages/variant-primjs-singlefile-cjs-debug-asyncify":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-singlefile-cjs-debug-asyncify@workspace:packages/variant-primjs-singlefile-cjs-debug-asyncify"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-singlefile-cjs-debug-sync@workspace:packages/variant-primjs-singlefile-cjs-debug-sync":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-singlefile-cjs-debug-sync@workspace:packages/variant-primjs-singlefile-cjs-debug-sync"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-singlefile-cjs-release-asyncify@workspace:packages/variant-primjs-singlefile-cjs-release-asyncify":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-singlefile-cjs-release-asyncify@workspace:packages/variant-primjs-singlefile-cjs-release-asyncify"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-singlefile-cjs-release-sync@workspace:packages/variant-primjs-singlefile-cjs-release-sync":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-singlefile-cjs-release-sync@workspace:packages/variant-primjs-singlefile-cjs-release-sync"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-singlefile-mjs-debug-asyncify@workspace:packages/variant-primjs-singlefile-mjs-debug-asyncify":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-singlefile-mjs-debug-asyncify@workspace:packages/variant-primjs-singlefile-mjs-debug-asyncify"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-singlefile-mjs-debug-sync@workspace:packages/variant-primjs-singlefile-mjs-debug-sync":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-singlefile-mjs-debug-sync@workspace:packages/variant-primjs-singlefile-mjs-debug-sync"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-singlefile-mjs-release-asyncify@workspace:packages/variant-primjs-singlefile-mjs-release-asyncify":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-singlefile-mjs-release-asyncify@workspace:packages/variant-primjs-singlefile-mjs-release-asyncify"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-singlefile-mjs-release-sync@workspace:packages/variant-primjs-singlefile-mjs-release-sync":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-singlefile-mjs-release-sync@workspace:packages/variant-primjs-singlefile-mjs-release-sync"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-wasmfile-debug-asyncify@workspace:packages/variant-primjs-wasmfile-debug-asyncify":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-wasmfile-debug-asyncify@workspace:packages/variant-primjs-wasmfile-debug-asyncify"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-wasmfile-debug-sync@workspace:packages/variant-primjs-wasmfile-debug-sync":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-wasmfile-debug-sync@workspace:packages/variant-primjs-wasmfile-debug-sync"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-wasmfile-release-asyncify@workspace:packages/variant-primjs-wasmfile-release-asyncify":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-wasmfile-release-asyncify@workspace:packages/variant-primjs-wasmfile-release-asyncify"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@jitl/primjs-wasmfile-release-sync@workspace:packages/variant-primjs-wasmfile-release-sync":
+  version: 0.0.0-use.local
+  resolution: "@jitl/primjs-wasmfile-release-sync@workspace:packages/variant-primjs-wasmfile-release-sync"
+  dependencies:
+    "@jitl/quickjs-ffi-types": "workspace:*"
+    quickjs-emscripten: "file:../quickjs-emscripten"
+  languageName: unknown
+  linkType: soft
+
 "@jitl/quickjs-asmjs-mjs-release-sync@workspace:*, @jitl/quickjs-asmjs-mjs-release-sync@workspace:packages/variant-quickjs-asmjs-mjs-release-sync":
   version: 0.0.0-use.local
   resolution: "@jitl/quickjs-asmjs-mjs-release-sync@workspace:packages/variant-quickjs-asmjs-mjs-release-sync"
@@ -5558,6 +5687,19 @@ __metadata:
     vitest: "npm:2.0.5"
   languageName: unknown
   linkType: soft
+
+"quickjs-emscripten@file:../quickjs-emscripten::locator=%40jitl%2Fprimjs-wasmfile-release-sync%40workspace%3Apackages%2Fvariant-primjs-wasmfile-release-sync":
+  version: 0.31.0
+  resolution: "quickjs-emscripten@file:../quickjs-emscripten#../quickjs-emscripten::hash=5822ad&locator=%40jitl%2Fprimjs-wasmfile-release-sync%40workspace%3Apackages%2Fvariant-primjs-wasmfile-release-sync"
+  dependencies:
+    "@jitl/quickjs-wasmfile-debug-asyncify": "workspace:*"
+    "@jitl/quickjs-wasmfile-debug-sync": "workspace:*"
+    "@jitl/quickjs-wasmfile-release-asyncify": "workspace:*"
+    "@jitl/quickjs-wasmfile-release-sync": "workspace:*"
+    quickjs-emscripten-core: "workspace:*"
+  checksum: cdedba1cda648e20d1fb1b661fb8eab906c486f16faad9362676991a31d812590f8aa4dbeeab369dac30de8cea4d4a8ffba5cb3ef2133146d16c78c22649e421
+  languageName: node
+  linkType: hard
 
 "quickjs-emscripten@workspace:packages/quickjs-emscripten":
   version: 0.0.0-use.local

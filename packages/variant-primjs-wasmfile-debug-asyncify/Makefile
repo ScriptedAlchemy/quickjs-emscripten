@@ -27,10 +27,14 @@ ifeq ($(QUICKJS_LIB),quickjs-ng)
 	CFLAGS_WASM+=-DQTS_USE_QUICKJS_NG
 	QUICKJS_SRC_EXT=c
 else ifeq ($(QUICKJS_LIB),primjs)
-	QUICKJS_DEFINES:=-D_GNU_SOURCE -DEMSCRIPTEN
-	CFLAGS_WASM+=-DQTS_USE_PRIMJS
+	QUICKJS_DEFINES:=-D_GNU_SOURCE -DEMSCRIPTEN -DLYNX_SIMPLIFY=1
+	CFLAGS_WASM+=-DQTS_USE_PRIMJS -fno-exceptions
 	QUICKJS_SRC_EXT=cc
 	QUICKJS_OBJS+=quickjs_gc.o primjs_monitor.o quickjs_queue.o quickjs_version.o
+	# GC-related object files
+	QUICKJS_OBJS+=qjsvaluevalue-space.o global-handles.o allocator.o collector.o sweeper.o thread_pool.o
+	# Link with C++ standard library
+	CFLAGS_WASM+=-lc++ -lc++abi
 else
 	QUICKJS_CONFIG_VERSION=$(shell cat $(QUICKJS_ROOT)/VERSION)
 	QUICKJS_DEFINES:=-D_GNU_SOURCE -DCONFIG_VERSION=\"$(QUICKJS_CONFIG_VERSION)\" -DCONFIG_STACK_CHECK -DCONFIG_BIGNUM
@@ -178,7 +182,11 @@ $(BUILD_QUICKJS)/%.o: $(QUICKJS_ROOT)/%.c $(WASM_SYMBOLS) | $(EMCC_SRC)
 
 $(BUILD_QUICKJS)/%.o: $(QUICKJS_ROOT)/src/interpreter/quickjs/source/%.cc $(WASM_SYMBOLS) | $(EMCC_SRC)
 	$(MKDIRP)
-	$(EMCC) $(CFLAGS_WASM) $(QUICKJS_DEFINES) -I$(QUICKJS_ROOT)/include -c -o $@ $<
+	$(EMCC) $(CFLAGS_WASM) $(QUICKJS_DEFINES) -I$(QUICKJS_ROOT)/include -I$(QUICKJS_ROOT)/src/interpreter -I$(QUICKJS_ROOT)/src -x c++ -c -o $@ $<
+
+$(BUILD_QUICKJS)/%.o: $(QUICKJS_ROOT)/src/gc/%.cc $(WASM_SYMBOLS) | $(EMCC_SRC)
+	$(MKDIRP)
+	$(EMCC) $(CFLAGS_WASM) $(QUICKJS_DEFINES) -I$(QUICKJS_ROOT)/include -I$(QUICKJS_ROOT)/src/interpreter -I$(QUICKJS_ROOT)/src -x c++ -c -o $@ $<
 
 $(BUILD_WRAPPER)/symbols.json:
 	$(MKDIRP)

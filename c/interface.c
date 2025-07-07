@@ -49,6 +49,17 @@
 #include "../vendor/quickjs-ng/cutils.h"
 #include "../vendor/quickjs-ng/quickjs-libc.h"
 #include "../vendor/quickjs-ng/quickjs.h"
+#elif defined(QTS_USE_PRIMJS)
+// PrimJS uses C++ features, so we need to compile as C++
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "../vendor/primjs/include/quickjs-libc.h"
+#include "../vendor/primjs/include/quickjs.h"
+#include "primjs-compat.h"
+#ifdef __cplusplus
+}
+#endif
 #else
 #include "../vendor/quickjs/cutils.h"
 #include "../vendor/quickjs/quickjs-libc.h"
@@ -208,11 +219,19 @@ JSValue *QTS_RuntimeComputeMemoryUsage(JSRuntime *rt, JSContext *ctx) {
   JS_SetPropertyStr(ctx, result, "prop_size", JS_NewInt64(ctx, s.prop_size));
   JS_SetPropertyStr(ctx, result, "shape_count", JS_NewInt64(ctx, s.shape_count));
   JS_SetPropertyStr(ctx, result, "shape_size", JS_NewInt64(ctx, s.shape_size));
+#ifdef QTS_USE_PRIMJS
+  JS_SetPropertyStr(ctx, result, "js_func_count", JS_NewInt64(ctx, s.lepus_func_count));
+  JS_SetPropertyStr(ctx, result, "js_func_size", JS_NewInt64(ctx, s.lepus_func_size));
+  JS_SetPropertyStr(ctx, result, "js_func_code_size", JS_NewInt64(ctx, s.lepus_func_code_size));
+  JS_SetPropertyStr(ctx, result, "js_func_pc2line_count", JS_NewInt64(ctx, s.lepus_func_pc2line_count));
+  JS_SetPropertyStr(ctx, result, "js_func_pc2line_size", JS_NewInt64(ctx, s.lepus_func_pc2line_size));
+#else
   JS_SetPropertyStr(ctx, result, "js_func_count", JS_NewInt64(ctx, s.js_func_count));
   JS_SetPropertyStr(ctx, result, "js_func_size", JS_NewInt64(ctx, s.js_func_size));
   JS_SetPropertyStr(ctx, result, "js_func_code_size", JS_NewInt64(ctx, s.js_func_code_size));
   JS_SetPropertyStr(ctx, result, "js_func_pc2line_count", JS_NewInt64(ctx, s.js_func_pc2line_count));
   JS_SetPropertyStr(ctx, result, "js_func_pc2line_size", JS_NewInt64(ctx, s.js_func_pc2line_size));
+#endif
   JS_SetPropertyStr(ctx, result, "c_func_count", JS_NewInt64(ctx, s.c_func_count));
   JS_SetPropertyStr(ctx, result, "array_count", JS_NewInt64(ctx, s.array_count));
   JS_SetPropertyStr(ctx, result, "fast_array_count", JS_NewInt64(ctx, s.fast_array_count));
@@ -303,6 +322,9 @@ void QTS_FreeRuntime(JSRuntime *rt) {
   if (data) {
     free(data);
   }
+#ifdef QTS_USE_PRIMJS
+  primjs_cleanup_runtime_opaque(rt);
+#endif
   JS_FreeRuntime(rt);
 }
 
@@ -344,7 +366,7 @@ JSContext *QTS_NewContext(JSRuntime *rt, IntrinsicsFlags intrinsics) {
   if (intrinsics & QTS_Intrinsic_Eval) {
     JS_AddIntrinsicEval(ctx);
   }
-#ifndef QTS_USE_QUICKJS_NG
+#if !defined(QTS_USE_QUICKJS_NG) && !defined(QTS_USE_PRIMJS)
   if (intrinsics & QTS_Intrinsic_StringNormalize) {
     JS_AddIntrinsicStringNormalize(ctx);
   }
