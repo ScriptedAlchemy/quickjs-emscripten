@@ -1,0 +1,3 @@
+[submodule "vendor/primjs"]
+	path = vendor/primjs
+	url = https://github.com/lynx-family/primjs.git
