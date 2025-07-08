@@ -109,6 +109,7 @@ CFLAGS_CJS+=-s ENVIRONMENT=web,worker,node
 # GENERATE_TS options - variant specific
 GENERATE_TS_ENV+=ASYNCIFY=true
 GENERATE_TS_ENV+=DEBUG=true
+GENERATE_TS_ENV+=QTS_USE_PRIMJS=true
 
 
 ifdef DEBUG_MAKE

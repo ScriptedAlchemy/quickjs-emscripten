@@ -277,6 +277,10 @@ function getGenerateTsEnv(targetName: string, variant: BuildVariant): Record<str
     env.DEBUG = "true"
   }
 
+  if (variant.library === CLibrary.PrimJS) {
+    env.QTS_USE_PRIMJS = "true"
+  }
+
   return env
 }
 

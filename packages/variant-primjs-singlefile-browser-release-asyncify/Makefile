@@ -104,6 +104,7 @@ CFLAGS_BROWSER+=-s ENVIRONMENT=web,worker
 
 # GENERATE_TS options - variant specific
 GENERATE_TS_ENV+=ASYNCIFY=true
+GENERATE_TS_ENV+=QTS_USE_PRIMJS=true
 
 
 ifdef DEBUG_MAKE
