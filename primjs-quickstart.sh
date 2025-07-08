@@ -42,7 +42,6 @@ check_requirements() {
     print_header "🔍 Checking Requirements"
     
     local missing=0
-    local build_possible=false
     
     # Check for Node.js
     if ! command -v node >/dev/null 2>&1; then
@@ -76,56 +75,65 @@ check_requirements() {
         print_success "Make found: $(make --version | head -1)"
     fi
     
-    # Check for build tools (Docker or Emscripten)
-    print_info "\nChecking build tools..."
-    
-    # Check for Docker
-    if command -v docker >/dev/null 2>&1; then
-        print_success "Docker found: $(docker --version)"
-        # Check if Docker daemon is running
-        if docker info >/dev/null 2>&1; then
-            print_success "Docker daemon is running"
-            build_possible=true
-        else
-            print_error "Docker daemon is not running. Please start Docker."
-            print_info "On Linux: sudo systemctl start docker"
-            print_info "On macOS/Windows: Start Docker Desktop"
-        fi
-    else
-        print_info "Docker not found."
-    fi
-    
-    # Check for Emscripten
-    if command -v emcc >/dev/null 2>&1; then
-        print_success "Emscripten found: $(emcc --version | head -1)"
-        build_possible=true
-    else
-        print_info "Emscripten not found."
-    fi
-    
-    # Summary of build tools
-    if [ "$build_possible" = false ]; then
-        print_error "\nNo build tools available. You need either Docker or Emscripten to build PrimJS."
-        print_info "\nOption 1: Install Docker (recommended, easier):"
-        print_info "  - Ubuntu/Debian: sudo apt-get install docker.io"
-        print_info "  - macOS: Install Docker Desktop from https://www.docker.com/products/docker-desktop"
-        print_info "  - Windows: Install Docker Desktop from https://www.docker.com/products/docker-desktop"
-        print_info "\nOption 2: Install Emscripten (advanced):"
-        print_info "  - Follow instructions at: https://emscripten.org/docs/getting_started/downloads.html"
-        print_info "\nNote: The build process will automatically use Docker if available,"
-        print_info "      falling back to native Emscripten if Docker is not found."
-        print_info "\nFor detailed Docker installation instructions, run:"
-        print_info "  ./install-docker-helper.sh"
-        missing=1
-    fi
-    
     if [ $missing -eq 1 ]; then
         print_error "\nMissing required dependencies. Please install them and try again."
         return 1
     fi
     
-    print_success "\nAll requirements satisfied!"
+    print_success "\nAll basic requirements satisfied!"
     return 0
+}
+
+# Setup Emscripten
+setup_emscripten() {
+    print_header "🛠️  Setting up Emscripten"
+    
+    # Target version
+    EMSDK_VERSION="3.1.65"
+    
+    # Check if we already have the correct version
+    if command -v emcc >/dev/null 2>&1; then
+        CURRENT_VERSION=$(emcc --version 2>/dev/null | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+        if [ "$CURRENT_VERSION" = "$EMSDK_VERSION" ]; then
+            print_success "Emscripten $EMSDK_VERSION is already installed and active"
+            return 0
+        else
+            print_info "Found Emscripten $CURRENT_VERSION, but need $EMSDK_VERSION"
+        fi
+    fi
+    
+    # Install Emscripten
+    print_info "Installing Emscripten $EMSDK_VERSION..."
+    
+    # Clean up any existing emsdk directory
+    if [ -d "./emsdk" ]; then
+        print_info "Removing existing emsdk directory..."
+        rm -rf ./emsdk
+    fi
+    
+    # Clone emsdk
+    print_info "Cloning Emscripten SDK..."
+    git clone https://github.com/emscripten-core/emsdk.git ./emsdk
+    
+    # Install and activate the specific version
+    cd emsdk
+    print_info "Installing Emscripten $EMSDK_VERSION..."
+    ./emsdk install $EMSDK_VERSION
+    print_info "Activating Emscripten $EMSDK_VERSION..."
+    ./emsdk activate $EMSDK_VERSION
+    cd ..
+    
+    # Source the environment
+    source ./emsdk/emsdk_env.sh
+    
+    # Verify installation
+    if command -v emcc >/dev/null 2>&1; then
+        print_success "Emscripten $EMSDK_VERSION installed successfully"
+        print_info "Emscripten version: $(emcc --version | head -1)"
+    else
+        print_error "Failed to install Emscripten"
+        return 1
+    fi
 }
 
 # Install dependencies
@@ -152,43 +160,28 @@ install_deps() {
 build_primjs() {
     print_header "🔨 Building PrimJS Variants"
     
-    # Check if we can build
-    if ! command -v docker >/dev/null 2>&1 && ! command -v emcc >/dev/null 2>&1; then
-        print_error "Cannot build: Neither Docker nor Emscripten is available."
-        print_info "Please install one of them first."
+    # Ensure Emscripten is available
+    if ! command -v emcc >/dev/null 2>&1; then
+        print_error "Emscripten is not available. Running setup..."
+        setup_emscripten || return 1
+    fi
+    
+    # Source emsdk environment if we have a local installation
+    if [ -f "./emsdk/emsdk_env.sh" ]; then
+        source ./emsdk/emsdk_env.sh
+    fi
+    
+    print_info "Using Emscripten for building..."
+    print_info "Emscripten version: $(emcc --version | head -1)"
+    
+    # Run the full build process
+    print_info "Running full build process (this may take a while)..."
+    yarn build || {
+        print_error "Build failed"
         return 1
-    fi
+    }
     
-    print_info "Generating build configurations..."
-    yarn generate
-    
-    print_info "Building all PrimJS variants (this may take a while)..."
-    if command -v docker >/dev/null 2>&1 && docker info >/dev/null 2>&1; then
-        print_info "Using Docker for building..."
-    elif command -v emcc >/dev/null 2>&1; then
-        print_info "Using native Emscripten for building..."
-    fi
-    
-    # Build each PrimJS variant
-    local variants=(
-        "primjs-wasmfile-release-sync"
-        "primjs-wasmfile-release-asyncify"
-        "primjs-wasmfile-debug-sync"
-        "primjs-wasmfile-debug-asyncify"
-    )
-    
-    for variant in "${variants[@]}"; do
-        if [ -d "packages/variant-$variant" ]; then
-            print_info "Building @jitl/$variant..."
-            (cd "packages/variant-$variant" && yarn build) || {
-                print_error "Failed to build $variant"
-                return 1
-            }
-            print_success "Built $variant"
-        fi
-    done
-    
-    print_success "All PrimJS variants built successfully!"
+    print_success "All packages built successfully!"
 }
 
 # Run PrimJS tests
@@ -279,15 +272,44 @@ EOF
     chmod +x "$test_variant/test-primjs.js"
     
     print_info "Running PrimJS tests..."
-    (cd "$test_variant" && node test-primjs.js) || {
+    if (cd "$test_variant" && node test-primjs.js); then
+        print_success "All PrimJS tests passed!"
+    else
         print_error "Tests failed"
+        rm -f "$test_variant/test-primjs.js"
         return 1
-    }
+    fi
     
     # Clean up test file
     rm -f "$test_variant/test-primjs.js"
+}
+
+# Clean build artifacts
+clean_build() {
+    print_header "🧹 Cleaning Build Artifacts"
     
-    print_success "All PrimJS tests passed!"
+    print_info "Cleaning build directories..."
+    
+    # Clean root build directory
+    rm -rf build/
+    
+    # Clean package build and dist directories
+    find packages -name "build" -type d -exec rm -rf {} + 2>/dev/null || true
+    find packages -name "dist" -type d -exec rm -rf {} + 2>/dev/null || true
+    
+    # Clean other generated files
+    find packages -name "*.d.ts" -type f -exec rm -f {} + 2>/dev/null || true
+    find packages -name "*.js" -type f -exec rm -f {} + 2>/dev/null || true
+    find packages -name "*.mjs" -type f -exec rm -f {} + 2>/dev/null || true
+    find packages -name "*.map" -type f -exec rm -f {} + 2>/dev/null || true
+    
+    # Clean emsdk if exists
+    if [ -d "./emsdk" ]; then
+        print_info "Removing Emscripten SDK..."
+        rm -rf ./emsdk
+    fi
+    
+    print_success "Build artifacts cleaned!"
 }
 
 # Main setup function
@@ -297,9 +319,10 @@ run_setup() {
     print_info "This will set up PrimJS in quickjs-emscripten."
     print_info "The process includes:"
     print_info "  1. Checking requirements"
-    print_info "  2. Installing dependencies"
-    print_info "  3. Building PrimJS variants"
-    print_info "  4. Running tests"
+    print_info "  2. Setting up Emscripten (if needed)"
+    print_info "  3. Installing dependencies"
+    print_info "  4. Building PrimJS variants"
+    print_info "  5. Running tests"
     print_info "\nThis may take 10-20 minutes depending on your system.\n"
     
     # Check requirements first
@@ -308,6 +331,9 @@ run_setup() {
         print_info "Please install the missing dependencies and run this script again."
         exit 1
     fi
+    
+    # Setup Emscripten if needed
+    setup_emscripten || exit 1
     
     # Run all steps
     install_deps || exit 1
@@ -334,7 +360,7 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     echo "Options:"
     echo "  --help, -h        Show this help message"
     echo "  --check           Check requirements only"
-    echo "  --clean           Clean build artifacts"
+    echo "  --clean           Clean build artifacts and Emscripten SDK"
     echo ""
     echo "By default, the script runs the complete setup process."
     exit 0
@@ -342,12 +368,7 @@ elif [ "$1" = "--check" ]; then
     check_requirements
     exit $?
 elif [ "$1" = "--clean" ]; then
-    print_header "🧹 Cleaning Build Artifacts"
-    print_info "Cleaning generated files..."
-    yarn clean
-    print_info "Cleaning PrimJS build artifacts..."
-    find packages -name "variant-primjs-*" -type d -exec rm -rf {} + 2>/dev/null || true
-    print_success "Build artifacts cleaned!"
+    clean_build
     exit 0
 fi
 

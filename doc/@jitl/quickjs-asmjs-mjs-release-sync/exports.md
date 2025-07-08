@@ -16,7 +16,7 @@
 
 ### default
 
-> **`const`** **default**: [`QuickJSSyncVariant`](../../quickjs-emscripten/interfaces/QuickJSSyncVariant.md)
+> **`const`** **default**: `QuickJSSyncVariant`
 
 ### @jitl/quickjs-asmjs-mjs-release-sync
 
@@ -33,7 +33,7 @@ Compiled to pure Javascript, no WebAssembly required.
 
 #### Source
 
-[index.ts:19](https://github.com/justjake/quickjs-emscripten/blob/main/packages/variant-quickjs-asmjs-mjs-release-sync/src/index.ts#L19)
+[index.ts:19](https://github.com/ScriptedAlchemy/quickjs-emscripten/blob/main/packages/variant-quickjs-asmjs-mjs-release-sync/src/index.ts#L19)
 
 ***
 

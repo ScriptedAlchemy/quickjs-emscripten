@@ -16,7 +16,7 @@
 
 ### default
 
-> **`const`** **default**: [`QuickJSSyncVariant`](../../quickjs-emscripten/interfaces/QuickJSSyncVariant.md)
+> **`const`** **default**: `QuickJSSyncVariant`
 
 ### @jitl/quickjs-singlefile-cjs-release-sync
 
@@ -33,7 +33,7 @@ Variant with the WASM data embedded into a universal (Node and Browser compatibl
 
 #### Source
 
-[index.ts:18](https://github.com/justjake/quickjs-emscripten/blob/main/packages/variant-quickjs-singlefile-cjs-release-sync/src/index.ts#L18)
+[index.ts:18](https://github.com/ScriptedAlchemy/quickjs-emscripten/blob/main/packages/variant-quickjs-singlefile-cjs-release-sync/src/index.ts#L18)
 
 ***
 
