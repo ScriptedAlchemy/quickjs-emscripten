@@ -114,6 +114,8 @@ check_requirements() {
         print_info "  - Follow instructions at: https://emscripten.org/docs/getting_started/downloads.html"
         print_info "\nNote: The build process will automatically use Docker if available,"
         print_info "      falling back to native Emscripten if Docker is not found."
+        print_info "\nFor detailed Docker installation instructions, run:"
+        print_info "  ./install-docker-helper.sh"
         missing=1
     fi
     
@@ -124,21 +126,6 @@ check_requirements() {
     
     print_success "\nAll requirements satisfied!"
     return 0
-}
-
-# Main menu
-show_menu() {
-    print_header "🚀 PrimJS QuickStart Menu"
-    echo "1) One-shot setup (recommended for first time)"
-    echo "2) Full setup (install deps, build all variants, run tests)"
-    echo "3) Install dependencies only"
-    echo "4) Build PrimJS variants only"
-    echo "5) Run PrimJS tests only"
-    echo "6) Clean build artifacts"
-    echo "7) Check requirements"
-    echo "8) Exit"
-    echo
-    read -p "Select an option (1-8): " choice
 }
 
 # Install dependencies
@@ -168,7 +155,7 @@ build_primjs() {
     # Check if we can build
     if ! command -v docker >/dev/null 2>&1 && ! command -v emcc >/dev/null 2>&1; then
         print_error "Cannot build: Neither Docker nor Emscripten is available."
-        print_info "Please install one of them first (see option 7 for requirements check)."
+        print_info "Please install one of them first."
         return 1
     fi
     
@@ -216,7 +203,7 @@ run_tests() {
     fi
     
     if [ ! -f "$test_variant/dist/index.js" ]; then
-        print_error "PrimJS variant not built. Please build first (option 4)."
+        print_error "PrimJS variant not built. Please build first."
         return 1
     fi
     
@@ -303,119 +290,66 @@ EOF
     print_success "All PrimJS tests passed!"
 }
 
-# Clean build artifacts
-clean_build() {
-    print_header "🧹 Cleaning Build Artifacts"
+# Main setup function
+run_setup() {
+    print_header "🚀 PrimJS QuickStart Setup"
     
-    print_info "Cleaning generated files..."
-    yarn clean
-    
-    print_info "Cleaning PrimJS build artifacts..."
-    find packages -name "variant-primjs-*" -type d -exec rm -rf {} + 2>/dev/null || true
-    
-    print_success "Build artifacts cleaned!"
-}
-
-# One-shot setup (non-interactive)
-one_shot_setup() {
-    print_header "🚀 Running One-Shot PrimJS Setup"
-    
-    print_info "This will perform a complete setup automatically."
-    print_info "It may take 10-20 minutes depending on your system.\n"
+    print_info "This will set up PrimJS in quickjs-emscripten."
+    print_info "The process includes:"
+    print_info "  1. Checking requirements"
+    print_info "  2. Installing dependencies"
+    print_info "  3. Building PrimJS variants"
+    print_info "  4. Running tests"
+    print_info "\nThis may take 10-20 minutes depending on your system.\n"
     
     # Check requirements first
     if ! check_requirements; then
-        print_error "\nCannot proceed with setup due to missing requirements."
-        print_info "Please install the missing dependencies and try again."
-        return 1
+        print_error "\nSetup cannot proceed due to missing requirements."
+        print_info "Please install the missing dependencies and run this script again."
+        exit 1
     fi
     
     # Run all steps
-    install_deps || return 1
-    build_primjs || return 1
-    run_tests || return 1
+    install_deps || exit 1
+    build_primjs || exit 1
+    run_tests || exit 1
     
     print_header "🎉 PrimJS Setup Complete!"
     print_success "PrimJS has been successfully integrated into quickjs-emscripten!"
-    print_info "You can now use any of the 16 PrimJS variants in your projects."
+    print_info "\nYou can now use any of the 16 PrimJS variants in your projects."
     print_info "See PRIMJS_HOWTO.md for usage instructions."
-    print_info ""
-    print_info "Quick example:"
+    print_info "\nQuick example:"
+    print_info "  import { newQuickJSWASMModuleFromVariant } from 'quickjs-emscripten-core'"
     print_info "  import primjsVariant from '@jitl/primjs-wasmfile-release-sync'"
     print_info "  const QuickJS = await newQuickJSWASMModuleFromVariant(primjsVariant)"
-}
-
-# Full setup
-full_setup() {
-    print_header "🚀 Running Full PrimJS Setup"
-    
-    if ! check_requirements; then
-        return 1
-    fi
-    
-    install_deps || return 1
-    build_primjs || return 1
-    run_tests || return 1
-    
-    print_header "🎉 PrimJS Setup Complete!"
-    print_success "PrimJS has been successfully integrated into quickjs-emscripten!"
-    print_info "You can now use any of the 16 PrimJS variants in your projects."
-    print_info "See PRIMJS_HOWTO.md for usage instructions."
+    print_info "\nHappy coding! 🚀"
 }
 
 # Parse command line arguments
-if [ "$1" = "--one-shot" ] || [ "$1" = "-1" ]; then
-    one_shot_setup
-    exit $?
-elif [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     echo "PrimJS QuickStart Script for quickjs-emscripten"
     echo ""
     echo "Usage: $0 [options]"
     echo ""
     echo "Options:"
-    echo "  --one-shot, -1    Run one-shot setup (non-interactive)"
     echo "  --help, -h        Show this help message"
+    echo "  --check           Check requirements only"
+    echo "  --clean           Clean build artifacts"
     echo ""
-    echo "Without options, the script runs in interactive mode."
+    echo "By default, the script runs the complete setup process."
+    exit 0
+elif [ "$1" = "--check" ]; then
+    check_requirements
+    exit $?
+elif [ "$1" = "--clean" ]; then
+    print_header "🧹 Cleaning Build Artifacts"
+    print_info "Cleaning generated files..."
+    yarn clean
+    print_info "Cleaning PrimJS build artifacts..."
+    find packages -name "variant-primjs-*" -type d -exec rm -rf {} + 2>/dev/null || true
+    print_success "Build artifacts cleaned!"
     exit 0
 fi
 
-# Main loop
-while true; do
-    show_menu
-    
-    case $choice in
-        1)
-            one_shot_setup
-            exit $?
-            ;;
-        2)
-            full_setup
-            ;;
-        3)
-            install_deps
-            ;;
-        4)
-            build_primjs
-            ;;
-        5)
-            run_tests
-            ;;
-        6)
-            clean_build
-            ;;
-        7)
-            check_requirements
-            ;;
-        8)
-            print_info "Exiting..."
-            exit 0
-            ;;
-        *)
-            print_error "Invalid option. Please select 1-8."
-            ;;
-    esac
-    
-    echo
-    read -p "Press Enter to continue..."
-done
+# Run the setup
+run_setup

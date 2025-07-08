@@ -34,9 +34,6 @@ git clone https://github.com/justjake/quickjs-emscripten.git
 cd quickjs-emscripten
 
 # Run the quickstart script
-./primjs-quickstart.sh --one-shot
-
-# Or run interactively:
 ./primjs-quickstart.sh
 ```
 

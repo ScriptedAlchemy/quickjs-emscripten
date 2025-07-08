@@ -909,7 +909,7 @@ You will need:
 
 For a quick setup of PrimJS, use the provided quickstart script:
 ```bash
-./primjs-quickstart.sh --one-shot
+./primjs-quickstart.sh
 ```
 
 ### The C parts
