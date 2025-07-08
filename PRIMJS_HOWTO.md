@@ -34,10 +34,35 @@ git clone https://github.com/justjake/quickjs-emscripten.git
 cd quickjs-emscripten
 
 # Run the quickstart script
-./primjs-quickstart.sh
+./primjs-quickstart.sh --one-shot
 
-# Select option 1 for full setup
+# Or run interactively:
+./primjs-quickstart.sh
 ```
+
+### Prerequisites
+
+You'll need either Docker or Emscripten to build PrimJS:
+
+**Option 1: Docker (Recommended)**
+- Easy to install and use
+- No complex setup required
+- The build system will automatically download and use the correct Emscripten version
+
+```bash
+# Ubuntu/Debian
+sudo apt-get install docker.io
+
+# macOS/Windows
+# Install Docker Desktop from https://www.docker.com/products/docker-desktop
+
+# For detailed instructions:
+./install-docker-helper.sh
+```
+
+**Option 2: Emscripten (Advanced)**
+- Install Emscripten 3.1.65 manually
+- See https://emscripten.org/docs/getting_started/downloads.html
 
 ## Installation
 

@@ -899,7 +899,18 @@ thinking comes next. Last updated 2022-03-18.
 This library is implemented in two languages: C (compiled to WASM with
 Emscripten), and Typescript.
 
-You will need `node`, `yarn`, `make`, and `emscripten` to build this project.
+### Prerequisites
+
+You will need:
+- `node` (v16.0.0 or later)
+- `yarn`
+- `make`
+- Either `docker` or `emscripten` (the build system will use Docker automatically if emscripten is not installed)
+
+For a quick setup of PrimJS, use the provided quickstart script:
+```bash
+./primjs-quickstart.sh --one-shot
+```
 
 ### The C parts
 
