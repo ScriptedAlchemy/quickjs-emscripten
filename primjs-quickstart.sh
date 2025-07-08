@@ -145,13 +145,13 @@ setup_emscripten() {
     cd emsdk
     
     # Install and activate specific version
-    ./emsdk install 3.1.65 --shallow || {
+    python3 emsdk.py install 3.1.65 --shallow || {
         cd ..
         print_error "Failed to install Emscripten 3.1.65"
         return 1
     }
     
-    ./emsdk activate 3.1.65 || {
+    python3 emsdk.py activate 3.1.65 || {
         cd ..
         print_error "Failed to activate Emscripten 3.1.65"
         return 1
