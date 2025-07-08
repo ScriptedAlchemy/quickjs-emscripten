@@ -37,18 +37,52 @@ if [ ! -f "package.json" ] || [ ! -d "vendor" ]; then
     exit 1
 fi
 
-# Main menu
-show_menu() {
-    print_header "🚀 PrimJS QuickStart Menu"
-    echo "1) Full setup (install deps, build all variants, run tests)"
-    echo "2) Install dependencies only"
-    echo "3) Build PrimJS variants only"
-    echo "4) Run PrimJS tests only"
-    echo "5) Clean build artifacts"
-    echo "6) Exit"
-    echo
-    read -p "Select an option (1-6): " choice
-}
+# Parse command line arguments
+INTERACTIVE=false
+ACTION="full"
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --interactive|-i)
+            INTERACTIVE=true
+            shift
+            ;;
+        --deps-only)
+            ACTION="deps"
+            shift
+            ;;
+        --build-only)
+            ACTION="build"
+            shift
+            ;;
+        --test-only)
+            ACTION="test"
+            shift
+            ;;
+        --clean)
+            ACTION="clean"
+            shift
+            ;;
+        --help|-h)
+            echo "Usage: $0 [options]"
+            echo "Options:"
+            echo "  --interactive, -i    Run in interactive mode with menu"
+            echo "  --deps-only         Install dependencies only"
+            echo "  --build-only        Build PrimJS variants only"
+            echo "  --test-only         Run tests only"
+            echo "  --clean             Clean build artifacts"
+            echo "  --help, -h          Show this help message"
+            echo ""
+            echo "Default: Run full setup (install deps, setup Emscripten, build, test)"
+            exit 0
+            ;;
+        *)
+            print_error "Unknown option: $1"
+            echo "Use --help for usage information"
+            exit 1
+            ;;
+    esac
+done
 
 # Install dependencies
 install_deps() {
@@ -70,12 +104,113 @@ install_deps() {
     print_success "Dependencies installed successfully!"
 }
 
+# Check and setup Emscripten
+setup_emscripten() {
+    print_header "🛠️  Setting up Emscripten"
+    
+    # Check if local emsdk has the correct version
+    if [ -f "./emsdk/emsdk_env.sh" ]; then
+        print_info "Found local emsdk installation, checking version..."
+        source ./emsdk/emsdk_env.sh > /dev/null 2>&1
+        if command -v emcc &> /dev/null && emcc --version | grep "3.1.65" &> /dev/null; then
+            print_success "Emscripten version 3.1.65 is already set up locally"
+            return 0
+        fi
+    fi
+    
+    # Check if system emcc has correct version
+    if command -v emcc &> /dev/null; then
+        local emcc_version=$(emcc --version | head -1)
+        print_info "System Emscripten found: $emcc_version"
+        
+        # Check if it's the correct version (3.1.65)
+        if emcc --version | grep "3.1.65" &> /dev/null; then
+            print_success "System Emscripten version 3.1.65 is installed"
+            return 0
+        else
+            print_info "System version doesn't match required version (3.1.65)"
+        fi
+    fi
+    
+    # Install emsdk locally
+    if [ ! -d "./emsdk" ]; then
+        print_info "Cloning Emscripten SDK..."
+        git clone https://github.com/emscripten-core/emsdk.git || {
+            print_error "Failed to clone emsdk repository"
+            return 1
+        }
+    fi
+    
+    print_info "Installing Emscripten 3.1.65 (this may take a while)..."
+    cd emsdk
+    
+    # Install and activate specific version
+    ./emsdk install 3.1.65 --shallow || {
+        cd ..
+        print_error "Failed to install Emscripten 3.1.65"
+        return 1
+    }
+    
+    ./emsdk activate 3.1.65 || {
+        cd ..
+        print_error "Failed to activate Emscripten 3.1.65"
+        return 1
+    }
+    
+    cd ..
+    
+    # Source emsdk for current session
+    print_info "Activating Emscripten for current session..."
+    source ./emsdk/emsdk_env.sh
+    
+    # Verify installation
+    if command -v emcc &> /dev/null && emcc --version | grep "3.1.65" &> /dev/null; then
+        print_success "Emscripten 3.1.65 setup complete!"
+        print_info "For future sessions, run: source ./emsdk/emsdk_env.sh"
+    else
+        print_error "Failed to verify Emscripten installation"
+        return 1
+    fi
+}
+
 # Build PrimJS variants
 build_primjs() {
     print_header "🔨 Building PrimJS Variants"
     
-    print_info "Generating build configurations..."
-    yarn generate
+    # Check if emcc is available
+    if ! command -v emcc &> /dev/null; then
+        # Try to source emsdk if it's installed locally
+        if [ -f "./emsdk/emsdk_env.sh" ]; then
+            print_info "Sourcing local Emscripten installation..."
+            source ./emsdk/emsdk_env.sh
+        else
+            print_info "Emscripten not found. Setting it up..."
+            setup_emscripten || {
+                print_error "Failed to setup Emscripten"
+                return 1
+            }
+        fi
+    fi
+    
+    # Set environment variables to use system emcc
+    export EMSDK_USE_DOCKER=""
+    export EMSDK_VERSION="3.1.65"
+    export EMSDK_PROJECT_ROOT="$PWD"
+    
+    print_info "Using Emscripten directly (no Docker required)"
+    emcc --version | head -1
+    
+    print_info "Preparing variants and generating build configurations..."
+    ./scripts/prepareVariants.ts || {
+        print_error "Failed to prepare variants"
+        return 1
+    }
+    
+    print_info "Building workspace packages..."
+    yarn workspace @jitl/tsconfig build || {
+        print_error "Failed to build tsconfig"
+        return 1
+    }
     
     print_info "Building all PrimJS variants (this may take a while)..."
     
@@ -213,6 +348,7 @@ full_setup() {
     print_header "🚀 Running Full PrimJS Setup"
     
     install_deps || exit 1
+    setup_emscripten || exit 1
     build_primjs || exit 1
     run_tests || exit 1
     
@@ -222,35 +358,74 @@ full_setup() {
     print_info "See PRIMJS_HOWTO.md for usage instructions."
 }
 
-# Main loop
-while true; do
-    show_menu
-    
-    case $choice in
-        1)
+# Main menu for interactive mode
+show_menu() {
+    print_header "🚀 PrimJS QuickStart Menu"
+    echo "1) Full setup (install deps, build all variants, run tests)"
+    echo "2) Install dependencies only"
+    echo "3) Setup Emscripten"
+    echo "4) Build PrimJS variants only"
+    echo "5) Run PrimJS tests only"
+    echo "6) Clean build artifacts"
+    echo "7) Exit"
+    echo
+    read -p "Select an option (1-7): " choice
+}
+
+# Execute based on mode
+if [ "$INTERACTIVE" = true ]; then
+    # Interactive mode with menu
+    while true; do
+        show_menu
+        
+        case $choice in
+            1)
+                full_setup
+                ;;
+            2)
+                install_deps
+                ;;
+            3)
+                setup_emscripten
+                ;;
+            4)
+                build_primjs
+                ;;
+            5)
+                run_tests
+                ;;
+            6)
+                clean_build
+                ;;
+            7)
+                print_info "Exiting..."
+                exit 0
+                ;;
+            *)
+                print_error "Invalid option. Please select 1-7."
+                ;;
+        esac
+        
+        echo
+        read -p "Press Enter to continue..."
+    done
+else
+    # Non-interactive mode
+    case $ACTION in
+        full)
             full_setup
             ;;
-        2)
+        deps)
             install_deps
             ;;
-        3)
+        build)
             build_primjs
             ;;
-        4)
+        test)
             run_tests
             ;;
-        5)
+        clean)
             clean_build
             ;;
-        6)
-            print_info "Exiting..."
-            exit 0
-            ;;
-        *)
-            print_error "Invalid option. Please select 1-6."
-            ;;
     esac
-    
-    echo
-    read -p "Press Enter to continue..."
-done
+fi

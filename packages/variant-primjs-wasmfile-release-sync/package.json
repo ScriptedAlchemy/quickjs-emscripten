@@ -56,7 +56,6 @@
     }
   },
   "dependencies": {
-    "@jitl/quickjs-ffi-types": "workspace:*",
-    "quickjs-emscripten": "file:../quickjs-emscripten"
+    "@jitl/quickjs-ffi-types": "workspace:*"
   }
 }
