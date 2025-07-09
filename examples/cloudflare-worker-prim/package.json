@@ -1,0 +1,26 @@
+{
+	"name": "raspy-glade-prim",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"deploy": "./copy-wasm-file-into-src.sh && wrangler deploy",
+		"dev": "./copy-wasm-file-into-src.sh && wrangler dev",
+		"start": "wrangler dev",
+		"test": "node tests/run-all-handler-tests.js",
+		"test:handlers": "node tests/run-all-handler-tests.js",
+		"test:unit": "node run-all-tests.js",
+		"test:integration": "node integration-tests.js",
+		"test:all": "npm run test:handlers && npm run test:unit && npm run test:integration"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20231218.0",
+		"typescript": "^5.0.4",
+		"wrangler": "^3.0.0"
+	},
+	"dependencies": {
+		"@jitl/lepus-ffi-types": "workspace:*",
+		"@jitl/lepus-wasmfile-release-sync": "workspace:*",
+		"@jitl/primjs-emscripten": "workspace:*"
+	}
+}

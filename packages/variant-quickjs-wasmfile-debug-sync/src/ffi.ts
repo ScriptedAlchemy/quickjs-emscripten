@@ -158,6 +158,9 @@ export class QuickJSFFI {
   QTS_GetFloat64: (ctx: JSContextPointer, value: JSValuePointer | JSValueConstPointer) => number =
     this.module.cwrap("QTS_GetFloat64", "number", ["number", "number"])
 
+  QTS_GetBool: (ctx: JSContextPointer, value: JSValuePointer | JSValueConstPointer) => number =
+    this.module.cwrap("QTS_GetBool", "number", ["number", "number"])
+
   QTS_NewString: (ctx: JSContextPointer, string: BorrowedHeapCharPointer) => JSValuePointer =
     this.module.cwrap("QTS_NewString", "number", ["number", "number"])
 

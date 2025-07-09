@@ -14,6 +14,12 @@ import RELEASE_SYNC from "@jitl/quickjs-wasmfile-release-sync"
 import DEBUG_ASYNC from "@jitl/quickjs-wasmfile-debug-asyncify"
 import RELEASE_ASYNC from "@jitl/quickjs-wasmfile-release-asyncify"
 
+// PrimJS variants (temporarily disabled for build)
+// import PRIMJS_DEBUG_SYNC from "@jitl/primjs-wasmfile-debug-sync"
+// import PRIMJS_RELEASE_SYNC from "@jitl/primjs-wasmfile-release-sync"
+// import PRIMJS_DEBUG_ASYNC from "@jitl/primjs-wasmfile-debug-asyncify"
+// import PRIMJS_RELEASE_ASYNC from "@jitl/primjs-wasmfile-release-asyncify"
+
 /**
  * Create a new, completely isolated WebAssembly module containing the QuickJS library.
  * See the documentation on {@link QuickJSWASMModule}.
@@ -53,4 +59,14 @@ export async function newQuickJSAsyncWASMModule(
   return newQuickJSAsyncWASMModuleFromVariant(variantOrPromise)
 }
 
-export { DEBUG_SYNC, RELEASE_SYNC, DEBUG_ASYNC, RELEASE_ASYNC }
+export { 
+  DEBUG_SYNC, 
+  RELEASE_SYNC, 
+  DEBUG_ASYNC, 
+  RELEASE_ASYNC
+  // PrimJS variants (temporarily disabled for build)
+  // PRIMJS_DEBUG_SYNC,
+  // PRIMJS_RELEASE_SYNC,
+  // PRIMJS_DEBUG_ASYNC,
+  // PRIMJS_RELEASE_ASYNC
+}

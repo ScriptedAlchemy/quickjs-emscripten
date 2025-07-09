@@ -41,6 +41,16 @@ async function main() {
 main()
 ```
 
+Or use a specific variant like PrimJS for enhanced debugging:
+
+```typescript
+import { newQuickJSWASMModuleFromVariant } from "quickjs-emscripten-core"
+import primjsVariant from "@jitl/primjs-wasmfile-release-sync"
+
+const QuickJS = await newQuickJSWASMModuleFromVariant(primjsVariant)
+// Now use QuickJS as usual, but with PrimJS's optimizations
+```
+
 [github]: https://github.com/justjake/quickjs-emscripten
 [npm]: https://www.npmjs.com/package/quickjs-emscripten
 [api]: https://github.com/justjake/quickjs-emscripten/blob/main/doc/packages.md
@@ -72,6 +82,7 @@ main()
       - [Reducing package size](#reducing-package-size)
       - [WebAssembly loading](#webassembly-loading)
       - [quickjs-ng](#quickjs-ng)
+      - [PrimJS](#primjs)
       - [Using in the browser without a build step](#using-in-the-browser-without-a-build-step)
     - [Debugging](#debugging)
     - [Supported Platforms](#supported-platforms)
@@ -83,26 +94,6 @@ main()
     - [The C parts](#the-c-parts)
     - [The Typescript parts](#the-typescript-parts)
     - [Yarn updates](#yarn-updates)
-
-## Contents
-
-- [Usage](README.md#usage)
-  - [Safely evaluate Javascript code](README.md#safely-evaluate-javascript-code)
-  - [Interfacing with the interpreter](README.md#interfacing-with-the-interpreter)
-  - [Memory Management](README.md#memory-management)
-  - [Exposing APIs](README.md#exposing-apis)
-  - [Testing your code](README.md#testing-your-code)
-  - [Packaging](README.md#packaging)
-  - [Debugging](README.md#debugging)
-  - [Supported Platforms](README.md#supported-platforms)
-  - [More Documentation](README.md#more-documentation)
-- [Background](README.md#background)
-- [Status & Roadmap](README.md#status-roadmap)
-- [Related](README.md#related)
-- [Developing](README.md#developing)
-  - [The C parts](README.md#the-c-parts)
-  - [The Typescript parts](README.md#the-typescript-parts)
-  - [Yarn updates](README.md#yarn-updates)
 
 ## Usage
 
@@ -736,6 +727,18 @@ const cloudflareVariant = newVariant(baseVariant, {
 
 There are several variants of quickjs-ng available, and quickjs-emscripten may switch to using quickjs-ng by default in the future. See [the list of variants][core].
 
+#### PrimJS
+
+[PrimJS](https://github.com/lynx-family/primjs) is a QuickJS derivative optimized for the Lynx framework, offering better performance and Chrome DevTools support. It has been integrated as a third JavaScript engine option alongside QuickJS and QuickJS-NG.
+
+Key features of PrimJS:
+- Chrome DevTools integration capability for debugging
+- Optimized garbage collector for long-running applications
+- Enhanced performance for Lynx framework use cases
+- 100% compatible with quickjs-emscripten API
+
+To use PrimJS, install one of the PrimJS variants (e.g., `@jitl/primjs-wasmfile-release-sync`) and pass it to `newQuickJSWASMModuleFromVariant`. See the [PrimJS How-To Guide](./PRIMJS_HOWTO.md) for detailed usage instructions and the [list of variants][core] for all available PrimJS packages.
+
 #### Using in the browser without a build step
 
 You can use quickjs-emscripten directly from an HTML file in two ways:
@@ -900,7 +903,18 @@ thinking comes next. Last updated 2022-03-18.
 This library is implemented in two languages: C (compiled to WASM with
 Emscripten), and Typescript.
 
-You will need `node`, `yarn`, `make`, and `emscripten` to build this project.
+### Prerequisites
+
+You will need:
+- `node` (v16.0.0 or later)
+- `yarn`
+- `make`
+- Either `docker` or `emscripten` (the build system will use Docker automatically if emscripten is not installed)
+
+For a quick setup of PrimJS, use the provided quickstart script:
+```bash
+./primjs-quickstart.sh
+```
 
 ### The C parts
 

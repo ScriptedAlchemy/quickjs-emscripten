@@ -29,6 +29,7 @@ enum SyncMode {
 enum CLibrary {
   QuickJS = "quickjs",
   NG = "quickjs-ng",
+  PrimJS = "primjs",
 }
 
 enum EmscriptenInclusion {
@@ -85,7 +86,7 @@ const SEPARATE_FILE_INCLUSION: BuildVariant["exports"] = {
 }
 
 const buildMatrix = {
-  library: [CLibrary.QuickJS, CLibrary.NG],
+  library: [CLibrary.QuickJS, CLibrary.NG, CLibrary.PrimJS],
   releaseMode: [ReleaseMode.Debug, ReleaseMode.Release],
   syncMode: [SyncMode.Sync, SyncMode.Asyncify],
 } as const
@@ -274,6 +275,10 @@ function getGenerateTsEnv(targetName: string, variant: BuildVariant): Record<str
 
   if (variant.releaseMode === ReleaseMode.Debug) {
     env.DEBUG = "true"
+  }
+
+  if (variant.library === CLibrary.PrimJS) {
+    env.QTS_USE_PRIMJS = "true"
   }
 
   return env
@@ -528,6 +533,7 @@ and [QuickJSAsyncContext](${DOC_ROOT_URL}/quickjs-emscripten/classes/QuickJSAsyn
 const describeLibrary = {
   [CLibrary.QuickJS]: `The original [bellard/quickjs](https://github.com/bellard/quickjs) library.`,
   [CLibrary.NG]: `[quickjs-ng](https://github.com/quickjs-ng/quickjs) is a fork of quickjs that tends to add features more quickly.`,
+  [CLibrary.PrimJS]: `[PrimJS](https://github.com/lynx-family/primjs) is a QuickJS derivative optimized for the Lynx framework with better performance and Chrome DevTools support.`,
 }
 
 const describeModuleFactory = {
@@ -862,16 +868,38 @@ function getTargetPackageSuffix(targetName: string, variant: BuildVariant): stri
 const CLibrarySubtree: Record<CLibrary, string> = {
   quickjs: "vendor/quickjs",
   "quickjs-ng": "vendor/quickjs-ng",
+  primjs: "vendor/primjs",
 }
 
 const CLibraryGithubRepo: Record<CLibrary, string> = {
   quickjs: "bellard/quickjs",
   "quickjs-ng": "quickjs-ng/quickjs",
+  primjs: "lynx-family/primjs",
 }
 
 function getLibraryVersionLink(library: CLibrary): string {
   if (getLibraryVersionMemo.has(library)) {
     return getLibraryVersionMemo.get(library)!
+  }
+
+  // Special handling for PrimJS as it's a submodule, not a subtree
+  if (library === CLibrary.PrimJS) {
+    let version = "git"
+    try {
+      version = fs.readFileSync(path.join(CLibrarySubtree[library], "PRIMJS_VERSION"), "utf-8").trim()
+    } catch (err) {
+      // Try to get git submodule info
+      try {
+        const gitmodules = fs.readFileSync(path.join(repoRoot, ".gitmodules"), "utf-8")
+        // Just use a simple version string for now
+        version = "latest"
+      } catch {
+        // pass
+      }
+    }
+    const result = `[${version}](https://github.com/${CLibraryGithubRepo[library]}) as a git submodule.`
+    getLibraryVersionMemo.set(library, result)
+    return result
   }
 
   const { sha, date } = getGitSubtreeSha(CLibrarySubtree[library])

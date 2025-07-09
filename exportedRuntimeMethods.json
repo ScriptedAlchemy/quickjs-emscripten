@@ -1,1 +1,25 @@
-["cwrap", "stringToUTF8", "lengthBytesUTF8", "UTF8ToString", "___lsan_do_recoverable_leak_check"]
+[
+  "cwrap", 
+  "stringToUTF8", 
+  "lengthBytesUTF8", 
+  "UTF8ToString", 
+  "___lsan_do_recoverable_leak_check",
+  "_LEPUS_RunGC",
+  "_LEPUS_TrigGC", 
+  "_LEPUS_IsInGCSweep",
+  "_LEPUS_SetMemoryLimit",
+  "_LEPUS_SetGCThreshold",
+  "_LEPUS_GetHeapSize",
+  "_LEPUS_IsGCMode",
+  "_LEPUS_IsGCModeRT",
+  "_GlobalizeReference",
+  "_DisposeGlobal",
+  "_SetGlobalWeak",
+  "_ClearGlobalWeak",
+  "_LEPUS_PushHandle",
+  "_LEPUS_ResetHandle",
+  "_GetNapiScope",
+  "_SetNapiScope",
+  "_InitNapiScope",
+  "_FreeNapiScope"
+]

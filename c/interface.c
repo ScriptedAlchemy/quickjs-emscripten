@@ -49,6 +49,17 @@
 #include "../vendor/quickjs-ng/cutils.h"
 #include "../vendor/quickjs-ng/quickjs-libc.h"
 #include "../vendor/quickjs-ng/quickjs.h"
+#elif defined(QTS_USE_PRIMJS)
+// PrimJS uses C++ features, so we need to compile as C++
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include "../vendor/primjs/include/quickjs-libc.h"
+#include "../vendor/primjs/include/quickjs.h"
+#include "primjs-compat.h"
+#ifdef __cplusplus
+}
+#endif
 #else
 #include "../vendor/quickjs/cutils.h"
 #include "../vendor/quickjs/quickjs-libc.h"
@@ -94,6 +105,12 @@
  * ASYNCIFY builds.
  */
 #define AsyncifyOnly(T) T
+
+/**
+ * Signal to our FFI code generator that this function is only available in
+ * PrimJS builds.
+ */
+#define PrimJSOnly(T) T
 
 #define JSVoid void
 
@@ -208,11 +225,19 @@ JSValue *QTS_RuntimeComputeMemoryUsage(JSRuntime *rt, JSContext *ctx) {
   JS_SetPropertyStr(ctx, result, "prop_size", JS_NewInt64(ctx, s.prop_size));
   JS_SetPropertyStr(ctx, result, "shape_count", JS_NewInt64(ctx, s.shape_count));
   JS_SetPropertyStr(ctx, result, "shape_size", JS_NewInt64(ctx, s.shape_size));
+#ifdef QTS_USE_PRIMJS
+  JS_SetPropertyStr(ctx, result, "js_func_count", JS_NewInt64(ctx, s.lepus_func_count));
+  JS_SetPropertyStr(ctx, result, "js_func_size", JS_NewInt64(ctx, s.lepus_func_size));
+  JS_SetPropertyStr(ctx, result, "js_func_code_size", JS_NewInt64(ctx, s.lepus_func_code_size));
+  JS_SetPropertyStr(ctx, result, "js_func_pc2line_count", JS_NewInt64(ctx, s.lepus_func_pc2line_count));
+  JS_SetPropertyStr(ctx, result, "js_func_pc2line_size", JS_NewInt64(ctx, s.lepus_func_pc2line_size));
+#else
   JS_SetPropertyStr(ctx, result, "js_func_count", JS_NewInt64(ctx, s.js_func_count));
   JS_SetPropertyStr(ctx, result, "js_func_size", JS_NewInt64(ctx, s.js_func_size));
   JS_SetPropertyStr(ctx, result, "js_func_code_size", JS_NewInt64(ctx, s.js_func_code_size));
   JS_SetPropertyStr(ctx, result, "js_func_pc2line_count", JS_NewInt64(ctx, s.js_func_pc2line_count));
   JS_SetPropertyStr(ctx, result, "js_func_pc2line_size", JS_NewInt64(ctx, s.js_func_pc2line_size));
+#endif
   JS_SetPropertyStr(ctx, result, "c_func_count", JS_NewInt64(ctx, s.c_func_count));
   JS_SetPropertyStr(ctx, result, "array_count", JS_NewInt64(ctx, s.array_count));
   JS_SetPropertyStr(ctx, result, "fast_array_count", JS_NewInt64(ctx, s.fast_array_count));
@@ -303,6 +328,9 @@ void QTS_FreeRuntime(JSRuntime *rt) {
   if (data) {
     free(data);
   }
+#ifdef QTS_USE_PRIMJS
+  primjs_cleanup_runtime_opaque(rt);
+#endif
   JS_FreeRuntime(rt);
 }
 
@@ -344,7 +372,7 @@ JSContext *QTS_NewContext(JSRuntime *rt, IntrinsicsFlags intrinsics) {
   if (intrinsics & QTS_Intrinsic_Eval) {
     JS_AddIntrinsicEval(ctx);
   }
-#ifndef QTS_USE_QUICKJS_NG
+#if !defined(QTS_USE_QUICKJS_NG) && !defined(QTS_USE_PRIMJS)
   if (intrinsics & QTS_Intrinsic_StringNormalize) {
     JS_AddIntrinsicStringNormalize(ctx);
   }
@@ -444,6 +472,10 @@ double QTS_GetFloat64(JSContext *ctx, JSValueConst *value) {
   double result = NAN;
   JS_ToFloat64(ctx, &result, *value);
   return result;
+}
+
+int QTS_GetBool(JSContext *ctx, JSValueConst *value) {
+  return JS_ToBool(ctx, *value);
 }
 
 JSValue *QTS_NewString(JSContext *ctx, BorrowedHeapChar *string) {
@@ -1250,3 +1282,100 @@ JSValue *QTS_bjson_decode(JSContext *ctx, JSValueConst *data) {
   JSValue value = JS_ReadObject(ctx, buffer, length, 0);
   return jsvalue_to_heap(value);
 }
+
+// ----------------------------------------------------------------------------
+// PrimJS Advanced Memory Management Functions
+#ifdef QTS_USE_PRIMJS
+
+// Garbage Collection Control
+PrimJSOnly(void) QTS_RunGC(JSRuntime *rt) {
+  LEPUS_RunGC(rt);
+}
+
+PrimJSOnly(void) QTS_TrigGC(JSRuntime *rt) {
+  LEPUS_TrigGC(rt);
+}
+
+PrimJSOnly(int) QTS_IsInGCSweep(JSRuntime *rt) {
+  return LEPUS_IsInGCSweep(rt) ? 1 : 0;
+}
+
+// Memory Management
+PrimJSOnly(void) QTS_SetMemoryLimit(JSRuntime *rt, size_t limit) {
+  LEPUS_SetMemoryLimit(rt, limit);
+}
+
+PrimJSOnly(void) QTS_SetGCThreshold(JSRuntime *rt, size_t threshold) {
+  LEPUS_SetGCThreshold(rt, threshold);
+}
+
+PrimJSOnly(size_t) QTS_GetHeapSize(JSRuntime *rt) {
+  return LEPUS_GetHeapSize(rt);
+}
+
+PrimJSOnly(int) QTS_IsGCMode(JSContext *ctx) {
+  return LEPUS_IsGCMode(ctx) ? 1 : 0;
+}
+
+PrimJSOnly(int) QTS_IsGCModeRT(JSRuntime *rt) {
+  return LEPUS_IsGCModeRT(rt) ? 1 : 0;
+}
+
+// Global Handle Management
+PrimJSOnly(JSValue *) QTS_GlobalizeReference(JSRuntime *rt, JSValueConst *value, int is_weak) {
+  JSValue *global_ref = GlobalizeReference(rt, *value, is_weak != 0);
+  return global_ref;
+}
+
+PrimJSOnly(void) QTS_DisposeGlobal(JSRuntime *rt, JSValue *global_ref) {
+  DisposeGlobal(rt, global_ref);
+}
+
+PrimJSOnly(void) QTS_SetGlobalWeak(JSRuntime *rt, JSValue *global_ref) {
+  SetGlobalWeak(rt, global_ref, NULL, NULL);
+}
+
+PrimJSOnly(void) QTS_ClearGlobalWeak(JSRuntime *rt, JSValue *global_ref) {
+  ClearGlobalWeak(rt, global_ref);
+}
+
+// Handle Scope Management
+PrimJSOnly(void) QTS_PushHandle(JSRuntime *rt) {
+  // PrimJS signature expects context and additional parameters
+  // For now, we'll use a placeholder implementation
+  // LEPUS_PushHandle(rt, NULL, 0);
+}
+
+PrimJSOnly(void) QTS_ResetHandle(JSRuntime *rt) {
+  // PrimJS signature expects context and additional parameters
+  // For now, we'll use a placeholder implementation
+  // LEPUS_ResetHandle(rt, NULL, 0);
+}
+
+// NAPI Scope Management (for Node.js compatibility)
+PrimJSOnly(void *) QTS_GetNapiScope(JSRuntime *rt) {
+  // PrimJS uses context instead of runtime for these functions
+  // We need a context, but we don't have one here
+  // Return NULL for now
+  return NULL;
+}
+
+PrimJSOnly(void) QTS_SetNapiScope(JSRuntime *rt, void *scope) {
+  // PrimJS uses context instead of runtime for these functions
+  // We need a context, but we don't have one here
+  // Do nothing for now
+}
+
+PrimJSOnly(void) QTS_InitNapiScope(JSRuntime *rt) {
+  // PrimJS uses context instead of runtime for these functions
+  // We need a context, but we don't have one here
+  // Do nothing for now
+}
+
+PrimJSOnly(void) QTS_FreeNapiScope(JSRuntime *rt) {
+  // PrimJS uses context instead of runtime for these functions
+  // We need a context, but we don't have one here
+  // Do nothing for now
+}
+
+#endif // QTS_USE_PRIMJS

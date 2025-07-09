@@ -74,6 +74,7 @@ export interface QuickJSFFI {
   ) => JSValuePointer
   QTS_NewFloat64: (ctx: JSContextPointer, num: number) => JSValuePointer
   QTS_GetFloat64: (ctx: JSContextPointer, value: JSValuePointer | JSValueConstPointer) => number
+  QTS_GetBool: (ctx: JSContextPointer, value: JSValuePointer | JSValueConstPointer) => number
   QTS_NewString: (ctx: JSContextPointer, string: BorrowedHeapCharPointer) => JSValuePointer
   QTS_GetString: (
     ctx: JSContextPointer,

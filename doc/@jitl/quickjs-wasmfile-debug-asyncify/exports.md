@@ -16,7 +16,7 @@
 
 ### default
 
-> **`const`** **default**: [`QuickJSAsyncVariant`](../../quickjs-emscripten/interfaces/QuickJSAsyncVariant.md)
+> **`const`** **default**: `QuickJSAsyncVariant`
 
 ### @jitl/quickjs-wasmfile-debug-asyncify
 
@@ -33,7 +33,7 @@ Variant with separate .WASM file. Supports browser ESM, NodeJS ESM, and NodeJS C
 
 #### Source
 
-[index.ts:18](https://github.com/justjake/quickjs-emscripten/blob/main/packages/variant-quickjs-wasmfile-debug-asyncify/src/index.ts#L18)
+[index.ts:18](https://github.com/ScriptedAlchemy/quickjs-emscripten/blob/main/packages/variant-quickjs-wasmfile-debug-asyncify/src/index.ts#L18)
 
 ***
 

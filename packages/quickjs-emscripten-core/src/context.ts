@@ -243,6 +243,7 @@ export class QuickJSContext
     args.callbacks.setContextCallbacks(this.ctx.value, this.cToHostCallbacks)
     this.dump = this.dump.bind(this)
     this.getString = this.getString.bind(this)
+    this.getBool = this.getBool.bind(this)
     this.getNumber = this.getNumber.bind(this)
     this.resolvePromise = this.resolvePromise.bind(this)
     this.uint32Out = this.memory.manage(
@@ -392,6 +393,9 @@ export class QuickJSContext
 
   /**
    * Create a QuickJS [bigint](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) value.
+   * 
+   * @remarks
+   * In PrimJS, BigInt support is limited to 64-bit signed integers.
    */
   newBigInt(num: bigint): QuickJSHandle {
     if (!this._BigInt) {
@@ -638,7 +642,7 @@ export class QuickJSContext
    * `typeof` operator. **Not** [standards compliant](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof).
    *
    * @remarks
-   * Does not support BigInt values correctly.
+   * In PrimJS, BigInt support is limited to 64-bit integers.
    */
   typeof(handle: QuickJSHandle) {
     this.runtime.assertOwned(handle)
@@ -652,6 +656,29 @@ export class QuickJSContext
   getNumber(handle: QuickJSHandle): number {
     this.runtime.assertOwned(handle)
     return this.ffi.QTS_GetFloat64(this.ctx.value, handle.value)
+  }
+
+  /**
+   * Converts `handle` to a Javascript boolean.
+   */
+  getBool(handle: QuickJSHandle): boolean {
+    this.runtime.assertOwned(handle)
+    // Temporary implementation until QTS_GetBool is available in WASM
+    if (this.ffi.QTS_GetBool) {
+      return Boolean(this.ffi.QTS_GetBool(this.ctx.value, handle.value))
+    } else {
+      // Fallback: use IsEqual with true/false constants
+      const trueResult = this.ffi.QTS_IsEqual(this.ctx.value, handle.value, this.true.value)
+      if (trueResult === 1) {
+        return true
+      }
+      const falseResult = this.ffi.QTS_IsEqual(this.ctx.value, handle.value, this.false.value)
+      if (falseResult === 1) {
+        return false
+      }
+      // For non-boolean values, default to false (conservative approach)
+      return false
+    }
   }
 
   /**
@@ -677,6 +704,9 @@ export class QuickJSContext
 
   /**
    * Converts `handle` to a Javascript bigint.
+   * 
+   * @remarks
+   * In PrimJS, BigInt support is limited to 64-bit signed integers.
    */
   getBigInt(handle: QuickJSHandle): bigint {
     this.runtime.assertOwned(handle)
@@ -1238,12 +1268,20 @@ export class QuickJSContext
       return this.getString(handle)
     } else if (type === "number") {
       return this.getNumber(handle)
+    } else if (type === "boolean") {
+      return this.getBool(handle)
     } else if (type === "bigint") {
       return this.getBigInt(handle)
     } else if (type === "undefined") {
       return undefined
     } else if (type === "symbol") {
       return this.getSymbol(handle)
+    }
+
+    // Special handling for null - check if it's actually null before promise processing
+    const nullResult = this.ffi.QTS_IsEqual(this.ctx.value, handle.value, this.null.value)
+    if (nullResult === 1) {
+      return null
     }
 
     // It's confusing if we dump(promise) and just get back {} because promise

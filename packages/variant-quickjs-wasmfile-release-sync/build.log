@@ -1,0 +1,284 @@
+EMSDK_VERSION=3.1.65 EMSDK_DOCKER_IMAGE=emscripten/emsdk:3.1.65 EMSDK_PROJECT_ROOT=/Users/bytedance/dev/quickjs-emscripten EMSDK_DOCKER_CACHE=/Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65 ../../scripts/emcc.sh -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1  -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -D_GNU_SOURCE -DCONFIG_VERSION=\"2024-02-14\" -DCONFIG_STACK_CHECK -DCONFIG_BIGNUM -c -o build/quickjs/quickjs.o ../../vendor/quickjs/quickjs.c
++ exec docker run --rm -v /Users/bytedance/dev/quickjs-emscripten:/Users/bytedance/dev/quickjs-emscripten -v /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync:/Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -u 501:20 -w /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/lto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/lto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/thinlto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/thinlto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/pic:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/pic -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/symbol_lists:/emsdk/upstream/emscripten/cache/symbol_lists emscripten/emsdk:3.1.65 emcc -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1 -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -D_GNU_SOURCE '-DCONFIG_VERSION="2024-02-14"' -DCONFIG_STACK_CHECK -DCONFIG_BIGNUM -c -o build/quickjs/quickjs.o ../../vendor/quickjs/quickjs.c
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+emcc: warning: linker setting ignored during compilation: 'EXPORTED_RUNTIME_METHODS' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'MODULARIZE' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'IMPORTED_MEMORY' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'EXPORT_NAME' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'INVOKE_RUN' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_MEMORY_GROWTH' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_TABLE_GROWTH' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'STACK_SIZE' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'SUPPORT_ERRNO' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'IGNORE_MISSING_MAIN' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_JS_LIBRARIES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_NATIVE_LIBRARIES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_ARCHIVE_INDEXES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'DEFAULT_TO_CXX' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_UNIMPLEMENTED_SYSCALLS' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'MIN_NODE_VERSION' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'NODEJS_CATCH_EXIT' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'FILESYSTEM' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'EXPORT_ES6' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ENVIRONMENT' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--closure' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--pre-js' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--pre-js' [-Wunused-command-line-argument]
+clang: warning: -lccall.js: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-s' [-Wunused-command-line-argument]
+EMSDK_VERSION=3.1.65 EMSDK_DOCKER_IMAGE=emscripten/emsdk:3.1.65 EMSDK_PROJECT_ROOT=/Users/bytedance/dev/quickjs-emscripten EMSDK_DOCKER_CACHE=/Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65 ../../scripts/emcc.sh -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1  -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -D_GNU_SOURCE -DCONFIG_VERSION=\"2024-02-14\" -DCONFIG_STACK_CHECK -DCONFIG_BIGNUM -c -o build/quickjs/libregexp.o ../../vendor/quickjs/libregexp.c
++ exec docker run --rm -v /Users/bytedance/dev/quickjs-emscripten:/Users/bytedance/dev/quickjs-emscripten -v /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync:/Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -u 501:20 -w /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/lto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/lto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/thinlto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/thinlto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/pic:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/pic -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/symbol_lists:/emsdk/upstream/emscripten/cache/symbol_lists emscripten/emsdk:3.1.65 emcc -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1 -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -D_GNU_SOURCE '-DCONFIG_VERSION="2024-02-14"' -DCONFIG_STACK_CHECK -DCONFIG_BIGNUM -c -o build/quickjs/libregexp.o ../../vendor/quickjs/libregexp.c
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+emcc: warning: linker setting ignored during compilation: 'EXPORTED_RUNTIME_METHODS' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'MODULARIZE' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'IMPORTED_MEMORY' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'EXPORT_NAME' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'INVOKE_RUN' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_MEMORY_GROWTH' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_TABLE_GROWTH' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'STACK_SIZE' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'SUPPORT_ERRNO' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'IGNORE_MISSING_MAIN' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_JS_LIBRARIES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_NATIVE_LIBRARIES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_ARCHIVE_INDEXES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'DEFAULT_TO_CXX' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_UNIMPLEMENTED_SYSCALLS' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'MIN_NODE_VERSION' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'NODEJS_CATCH_EXIT' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'FILESYSTEM' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'EXPORT_ES6' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ENVIRONMENT' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--closure' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--pre-js' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--pre-js' [-Wunused-command-line-argument]
+clang: warning: -lccall.js: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-s' [-Wunused-command-line-argument]
+EMSDK_VERSION=3.1.65 EMSDK_DOCKER_IMAGE=emscripten/emsdk:3.1.65 EMSDK_PROJECT_ROOT=/Users/bytedance/dev/quickjs-emscripten EMSDK_DOCKER_CACHE=/Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65 ../../scripts/emcc.sh -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1  -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -D_GNU_SOURCE -DCONFIG_VERSION=\"2024-02-14\" -DCONFIG_STACK_CHECK -DCONFIG_BIGNUM -c -o build/quickjs/libunicode.o ../../vendor/quickjs/libunicode.c
++ exec docker run --rm -v /Users/bytedance/dev/quickjs-emscripten:/Users/bytedance/dev/quickjs-emscripten -v /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync:/Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -u 501:20 -w /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/lto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/lto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/thinlto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/thinlto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/pic:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/pic -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/symbol_lists:/emsdk/upstream/emscripten/cache/symbol_lists emscripten/emsdk:3.1.65 emcc -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1 -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -D_GNU_SOURCE '-DCONFIG_VERSION="2024-02-14"' -DCONFIG_STACK_CHECK -DCONFIG_BIGNUM -c -o build/quickjs/libunicode.o ../../vendor/quickjs/libunicode.c
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+emcc: warning: linker setting ignored during compilation: 'EXPORTED_RUNTIME_METHODS' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'MODULARIZE' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'IMPORTED_MEMORY' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'EXPORT_NAME' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'INVOKE_RUN' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_MEMORY_GROWTH' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_TABLE_GROWTH' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'STACK_SIZE' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'SUPPORT_ERRNO' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'IGNORE_MISSING_MAIN' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_JS_LIBRARIES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_NATIVE_LIBRARIES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_ARCHIVE_INDEXES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'DEFAULT_TO_CXX' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_UNIMPLEMENTED_SYSCALLS' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'MIN_NODE_VERSION' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'NODEJS_CATCH_EXIT' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'FILESYSTEM' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'EXPORT_ES6' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ENVIRONMENT' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--closure' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--pre-js' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--pre-js' [-Wunused-command-line-argument]
+clang: warning: -lccall.js: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-s' [-Wunused-command-line-argument]
+EMSDK_VERSION=3.1.65 EMSDK_DOCKER_IMAGE=emscripten/emsdk:3.1.65 EMSDK_PROJECT_ROOT=/Users/bytedance/dev/quickjs-emscripten EMSDK_DOCKER_CACHE=/Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65 ../../scripts/emcc.sh -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1  -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -D_GNU_SOURCE -DCONFIG_VERSION=\"2024-02-14\" -DCONFIG_STACK_CHECK -DCONFIG_BIGNUM -c -o build/quickjs/cutils.o ../../vendor/quickjs/cutils.c
++ exec docker run --rm -v /Users/bytedance/dev/quickjs-emscripten:/Users/bytedance/dev/quickjs-emscripten -v /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync:/Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -u 501:20 -w /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/lto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/lto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/thinlto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/thinlto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/pic:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/pic -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/symbol_lists:/emsdk/upstream/emscripten/cache/symbol_lists emscripten/emsdk:3.1.65 emcc -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1 -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -D_GNU_SOURCE '-DCONFIG_VERSION="2024-02-14"' -DCONFIG_STACK_CHECK -DCONFIG_BIGNUM -c -o build/quickjs/cutils.o ../../vendor/quickjs/cutils.c
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+emcc: warning: linker setting ignored during compilation: 'EXPORTED_RUNTIME_METHODS' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'MODULARIZE' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'IMPORTED_MEMORY' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'EXPORT_NAME' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'INVOKE_RUN' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_MEMORY_GROWTH' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_TABLE_GROWTH' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'STACK_SIZE' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'SUPPORT_ERRNO' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'IGNORE_MISSING_MAIN' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_JS_LIBRARIES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_NATIVE_LIBRARIES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_ARCHIVE_INDEXES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'DEFAULT_TO_CXX' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_UNIMPLEMENTED_SYSCALLS' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'MIN_NODE_VERSION' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'NODEJS_CATCH_EXIT' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'FILESYSTEM' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'EXPORT_ES6' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ENVIRONMENT' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--closure' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--pre-js' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--pre-js' [-Wunused-command-line-argument]
+clang: warning: -lccall.js: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-s' [-Wunused-command-line-argument]
+EMSDK_VERSION=3.1.65 EMSDK_DOCKER_IMAGE=emscripten/emsdk:3.1.65 EMSDK_PROJECT_ROOT=/Users/bytedance/dev/quickjs-emscripten EMSDK_DOCKER_CACHE=/Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65 ../../scripts/emcc.sh -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1  -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -D_GNU_SOURCE -DCONFIG_VERSION=\"2024-02-14\" -DCONFIG_STACK_CHECK -DCONFIG_BIGNUM -c -o build/quickjs/quickjs-libc.o ../../vendor/quickjs/quickjs-libc.c
++ exec docker run --rm -v /Users/bytedance/dev/quickjs-emscripten:/Users/bytedance/dev/quickjs-emscripten -v /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync:/Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -u 501:20 -w /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/lto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/lto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/thinlto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/thinlto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/pic:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/pic -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/symbol_lists:/emsdk/upstream/emscripten/cache/symbol_lists emscripten/emsdk:3.1.65 emcc -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1 -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -D_GNU_SOURCE '-DCONFIG_VERSION="2024-02-14"' -DCONFIG_STACK_CHECK -DCONFIG_BIGNUM -c -o build/quickjs/quickjs-libc.o ../../vendor/quickjs/quickjs-libc.c
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+emcc: warning: linker setting ignored during compilation: 'EXPORTED_RUNTIME_METHODS' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'MODULARIZE' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'IMPORTED_MEMORY' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'EXPORT_NAME' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'INVOKE_RUN' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_MEMORY_GROWTH' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_TABLE_GROWTH' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'STACK_SIZE' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'SUPPORT_ERRNO' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'IGNORE_MISSING_MAIN' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_JS_LIBRARIES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_NATIVE_LIBRARIES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_ARCHIVE_INDEXES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'DEFAULT_TO_CXX' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_UNIMPLEMENTED_SYSCALLS' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'MIN_NODE_VERSION' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'NODEJS_CATCH_EXIT' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'FILESYSTEM' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'EXPORT_ES6' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ENVIRONMENT' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--closure' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--pre-js' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--pre-js' [-Wunused-command-line-argument]
+clang: warning: -lccall.js: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-s' [-Wunused-command-line-argument]
+EMSDK_VERSION=3.1.65 EMSDK_DOCKER_IMAGE=emscripten/emsdk:3.1.65 EMSDK_PROJECT_ROOT=/Users/bytedance/dev/quickjs-emscripten EMSDK_DOCKER_CACHE=/Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65 ../../scripts/emcc.sh -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1  -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -D_GNU_SOURCE -DCONFIG_VERSION=\"2024-02-14\" -DCONFIG_STACK_CHECK -DCONFIG_BIGNUM -c -o build/quickjs/libbf.o ../../vendor/quickjs/libbf.c
++ exec docker run --rm -v /Users/bytedance/dev/quickjs-emscripten:/Users/bytedance/dev/quickjs-emscripten -v /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync:/Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -u 501:20 -w /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/lto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/lto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/thinlto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/thinlto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/pic:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/pic -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/symbol_lists:/emsdk/upstream/emscripten/cache/symbol_lists emscripten/emsdk:3.1.65 emcc -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1 -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -D_GNU_SOURCE '-DCONFIG_VERSION="2024-02-14"' -DCONFIG_STACK_CHECK -DCONFIG_BIGNUM -c -o build/quickjs/libbf.o ../../vendor/quickjs/libbf.c
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+emcc: warning: linker setting ignored during compilation: 'EXPORTED_RUNTIME_METHODS' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'MODULARIZE' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'IMPORTED_MEMORY' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'EXPORT_NAME' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'INVOKE_RUN' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_MEMORY_GROWTH' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_TABLE_GROWTH' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'STACK_SIZE' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'SUPPORT_ERRNO' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'IGNORE_MISSING_MAIN' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_JS_LIBRARIES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_NATIVE_LIBRARIES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'AUTO_ARCHIVE_INDEXES' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'DEFAULT_TO_CXX' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ALLOW_UNIMPLEMENTED_SYSCALLS' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'MIN_NODE_VERSION' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'NODEJS_CATCH_EXIT' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'FILESYSTEM' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'EXPORT_ES6' [-Wunused-command-line-argument]
+emcc: warning: linker setting ignored during compilation: 'ENVIRONMENT' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--closure' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--pre-js' [-Wunused-command-line-argument]
+emcc: warning: linker flag ignored during compilation: '--pre-js' [-Wunused-command-line-argument]
+clang: warning: -lccall.js: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-s' [-Wunused-command-line-argument]
+EMSDK_VERSION=3.1.65 EMSDK_DOCKER_IMAGE=emscripten/emsdk:3.1.65 EMSDK_PROJECT_ROOT=/Users/bytedance/dev/quickjs-emscripten EMSDK_DOCKER_CACHE=/Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65 ../../scripts/emcc.sh -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1  -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -Wcast-function-type    -s EXPORTED_FUNCTIONS=@build/wrapper/symbols.json -o build/wrapper/browser/emscripten-module.js build/wrapper/interface.o  build/quickjs/quickjs.o  build/quickjs/libregexp.o  build/quickjs/libunicode.o  build/quickjs/cutils.o  build/quickjs/quickjs-libc.o  build/quickjs/libbf.o
++ exec docker run --rm -v /Users/bytedance/dev/quickjs-emscripten:/Users/bytedance/dev/quickjs-emscripten -v /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync:/Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -u 501:20 -w /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/lto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/lto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/thinlto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/thinlto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/pic:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/pic -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/symbol_lists:/emsdk/upstream/emscripten/cache/symbol_lists emscripten/emsdk:3.1.65 emcc -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1 -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s EXPORT_ES6=1 -s ENVIRONMENT=web,worker -Wcast-function-type -s EXPORTED_FUNCTIONS=@build/wrapper/symbols.json -o build/wrapper/browser/emscripten-module.js build/wrapper/interface.o build/quickjs/quickjs.o build/quickjs/libregexp.o build/quickjs/libunicode.o build/quickjs/cutils.o build/quickjs/quickjs-libc.o build/quickjs/libbf.o
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+emcc: warning: SUPPORT_ERRNO is deprecated (emscripten no longer uses the setErrNo library function). Please open a bug if you have a continuing need for this setting [-Wdeprecated]
+warning: invalid item in EXPORTED_RUNTIME_METHODS: ___lsan_do_recoverable_leak_check
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_RunGC
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_TrigGC
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_IsInGCSweep
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_SetMemoryLimit
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_SetGCThreshold
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_GetHeapSize
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_IsGCMode
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_IsGCModeRT
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _GlobalizeReference
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _DisposeGlobal
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _SetGlobalWeak
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _ClearGlobalWeak
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_PushHandle
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_ResetHandle
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _GetNapiScope
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _SetNapiScope
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _InitNapiScope
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _FreeNapiScope
+emcc: warning: warnings in JS library compilation [-Wjs-compiler]
+building:WARNING: falling back to java version of closure compiler
+if [ -e build/wrapper/browser/emscripten-module.wasm ] ; then cp -v build/wrapper/browser/emscripten-module.wasm* dist/; fi
+build/wrapper/browser/emscripten-module.wasm -> dist/emscripten-module.wasm
+cp build/wrapper/browser/emscripten-module.js dist/emscripten-module.browser.mjs
+echo '// Generated from ../../templates/emscripten-module.SYNC.d.ts' > dist/emscripten-module.browser.d.ts
+cat ../../templates/emscripten-module.SYNC.d.ts >> dist/emscripten-module.browser.d.ts
+EMSDK_VERSION=3.1.65 EMSDK_DOCKER_IMAGE=emscripten/emsdk:3.1.65 EMSDK_PROJECT_ROOT=/Users/bytedance/dev/quickjs-emscripten EMSDK_DOCKER_CACHE=/Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65 ../../scripts/emcc.sh -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1  -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js  -Wcast-function-type    -s EXPORTED_FUNCTIONS=@build/wrapper/symbols.json -o dist/emscripten-module.mjs build/wrapper/interface.o  build/quickjs/quickjs.o  build/quickjs/libregexp.o  build/quickjs/libunicode.o  build/quickjs/cutils.o  build/quickjs/quickjs-libc.o  build/quickjs/libbf.o
++ exec docker run --rm -v /Users/bytedance/dev/quickjs-emscripten:/Users/bytedance/dev/quickjs-emscripten -v /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync:/Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -u 501:20 -w /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/lto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/lto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/thinlto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/thinlto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/pic:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/pic -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/symbol_lists:/emsdk/upstream/emscripten/cache/symbol_lists emscripten/emsdk:3.1.65 emcc -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1 -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -Wcast-function-type -s EXPORTED_FUNCTIONS=@build/wrapper/symbols.json -o dist/emscripten-module.mjs build/wrapper/interface.o build/quickjs/quickjs.o build/quickjs/libregexp.o build/quickjs/libunicode.o build/quickjs/cutils.o build/quickjs/quickjs-libc.o build/quickjs/libbf.o
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+emcc: warning: SUPPORT_ERRNO is deprecated (emscripten no longer uses the setErrNo library function). Please open a bug if you have a continuing need for this setting [-Wdeprecated]
+warning: invalid item in EXPORTED_RUNTIME_METHODS: ___lsan_do_recoverable_leak_check
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_RunGC
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_TrigGC
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_IsInGCSweep
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_SetMemoryLimit
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_SetGCThreshold
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_GetHeapSize
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_IsGCMode
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_IsGCModeRT
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _GlobalizeReference
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _DisposeGlobal
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _SetGlobalWeak
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _ClearGlobalWeak
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_PushHandle
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_ResetHandle
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _GetNapiScope
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _SetNapiScope
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _InitNapiScope
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _FreeNapiScope
+emcc: warning: warnings in JS library compilation [-Wjs-compiler]
+building:WARNING: falling back to java version of closure compiler
+echo '// Generated from ../../templates/emscripten-module.SYNC.d.ts' > dist/emscripten-module.d.ts
+cat ../../templates/emscripten-module.SYNC.d.ts >> dist/emscripten-module.d.ts
+EMSDK_VERSION=3.1.65 EMSDK_DOCKER_IMAGE=emscripten/emsdk:3.1.65 EMSDK_PROJECT_ROOT=/Users/bytedance/dev/quickjs-emscripten EMSDK_DOCKER_CACHE=/Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65 ../../scripts/emcc.sh -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1  -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s ENVIRONMENT=node -Wcast-function-type    -s EXPORTED_FUNCTIONS=@build/wrapper/symbols.json -o dist/emscripten-module.cjs build/wrapper/interface.o  build/quickjs/quickjs.o  build/quickjs/libregexp.o  build/quickjs/libunicode.o  build/quickjs/cutils.o  build/quickjs/quickjs-libc.o  build/quickjs/libbf.o
++ exec docker run --rm -v /Users/bytedance/dev/quickjs-emscripten:/Users/bytedance/dev/quickjs-emscripten -v /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync:/Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -u 501:20 -w /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/lto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/lto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/thinlto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/thinlto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/pic:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/pic -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/symbol_lists:/emsdk/upstream/emscripten/cache/symbol_lists emscripten/emsdk:3.1.65 emcc -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1 -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s ENVIRONMENT=node -Wcast-function-type -s EXPORTED_FUNCTIONS=@build/wrapper/symbols.json -o dist/emscripten-module.cjs build/wrapper/interface.o build/quickjs/quickjs.o build/quickjs/libregexp.o build/quickjs/libunicode.o build/quickjs/cutils.o build/quickjs/quickjs-libc.o build/quickjs/libbf.o
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+emcc: warning: SUPPORT_ERRNO is deprecated (emscripten no longer uses the setErrNo library function). Please open a bug if you have a continuing need for this setting [-Wdeprecated]
+cache:INFO: generating system asset: symbol_lists/8ebe51fefb17a73d52b14385d77649556ea2610f.json... (this will be cached in "/emsdk/upstream/emscripten/cache/symbol_lists/8ebe51fefb17a73d52b14385d77649556ea2610f.json" for subsequent builds)
+cache:INFO:  - ok
+warning: invalid item in EXPORTED_RUNTIME_METHODS: ___lsan_do_recoverable_leak_check
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_RunGC
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_TrigGC
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_IsInGCSweep
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_SetMemoryLimit
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_SetGCThreshold
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_GetHeapSize
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_IsGCMode
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_IsGCModeRT
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _GlobalizeReference
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _DisposeGlobal
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _SetGlobalWeak
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _ClearGlobalWeak
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_PushHandle
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_ResetHandle
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _GetNapiScope
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _SetNapiScope
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _InitNapiScope
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _FreeNapiScope
+emcc: warning: warnings in JS library compilation [-Wjs-compiler]
+building:WARNING: falling back to java version of closure compiler
+EMSDK_VERSION=3.1.65 EMSDK_DOCKER_IMAGE=emscripten/emsdk:3.1.65 EMSDK_PROJECT_ROOT=/Users/bytedance/dev/quickjs-emscripten EMSDK_DOCKER_CACHE=/Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65 ../../scripts/emcc.sh -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1  -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s ENVIRONMENT=web -Wcast-function-type    -s EXPORTED_FUNCTIONS=@build/wrapper/symbols.json -o build/wrapper/cloudflare/emscripten-module.js build/wrapper/interface.o  build/quickjs/quickjs.o  build/quickjs/libregexp.o  build/quickjs/libunicode.o  build/quickjs/cutils.o  build/quickjs/quickjs-libc.o  build/quickjs/libbf.o
++ exec docker run --rm -v /Users/bytedance/dev/quickjs-emscripten:/Users/bytedance/dev/quickjs-emscripten -v /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync:/Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -u 501:20 -w /Users/bytedance/dev/quickjs-emscripten/packages/variant-quickjs-wasmfile-release-sync -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/lto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/lto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/thinlto:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/thinlto -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/sysroot/lib/wasm32-emscripten/pic:/emsdk/upstream/emscripten/cache/sysroot/lib/wasm32-emscripten/pic -v /Users/bytedance/dev/quickjs-emscripten/emsdk-cache/3.1.65/symbol_lists:/emsdk/upstream/emscripten/cache/symbol_lists emscripten/emsdk:3.1.65 emcc -DCONFIG_BIGNUM -s EXPORTED_RUNTIME_METHODS=@../../exportedRuntimeMethods.json -s MODULARIZE=1 -s IMPORTED_MEMORY=1 -s EXPORT_NAME=QuickJSRaw -s INVOKE_RUN=0 -s ALLOW_MEMORY_GROWTH=1 -s ALLOW_TABLE_GROWTH=1 -s STACK_SIZE=5MB -s SUPPORT_ERRNO=0 -s IGNORE_MISSING_MAIN=0 --no-entry -s AUTO_JS_LIBRARIES=0 -s -lccall.js -s AUTO_NATIVE_LIBRARIES=0 -s AUTO_ARCHIVE_INDEXES=0 -s DEFAULT_TO_CXX=0 -s ALLOW_UNIMPLEMENTED_SYSCALLS=0 -s MIN_NODE_VERSION=160000 -s NODEJS_CATCH_EXIT=0 -Oz -flto --closure 1 -s FILESYSTEM=0 --pre-js ../../templates/pre-extension.js --pre-js ../../templates/pre-wasmMemory.js -s ENVIRONMENT=web -Wcast-function-type -s EXPORTED_FUNCTIONS=@build/wrapper/symbols.json -o build/wrapper/cloudflare/emscripten-module.js build/wrapper/interface.o build/quickjs/quickjs.o build/quickjs/libregexp.o build/quickjs/libunicode.o build/quickjs/cutils.o build/quickjs/quickjs-libc.o build/quickjs/libbf.o
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+emcc: warning: SUPPORT_ERRNO is deprecated (emscripten no longer uses the setErrNo library function). Please open a bug if you have a continuing need for this setting [-Wdeprecated]
+cache:INFO: generating system asset: symbol_lists/c27f88393c485571bb17dcf6727cacdde114890b.json... (this will be cached in "/emsdk/upstream/emscripten/cache/symbol_lists/c27f88393c485571bb17dcf6727cacdde114890b.json" for subsequent builds)
+cache:INFO:  - ok
+warning: invalid item in EXPORTED_RUNTIME_METHODS: ___lsan_do_recoverable_leak_check
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_RunGC
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_TrigGC
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_IsInGCSweep
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_SetMemoryLimit
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_SetGCThreshold
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_GetHeapSize
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_IsGCMode
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_IsGCModeRT
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _GlobalizeReference
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _DisposeGlobal
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _SetGlobalWeak
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _ClearGlobalWeak
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_PushHandle
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _LEPUS_ResetHandle
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _GetNapiScope
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _SetNapiScope
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _InitNapiScope
+warning: invalid item in EXPORTED_RUNTIME_METHODS: _FreeNapiScope
+emcc: warning: warnings in JS library compilation [-Wjs-compiler]
+building:WARNING: falling back to java version of closure compiler
+if [ -e build/wrapper/cloudflare/emscripten-module.wasm ] ; then cp -v build/wrapper/cloudflare/emscripten-module.wasm* dist/; fi
+build/wrapper/cloudflare/emscripten-module.wasm -> dist/emscripten-module.wasm
+cp build/wrapper/cloudflare/emscripten-module.js dist/emscripten-module.cloudflare.cjs
+echo '// Generated from ../../templates/emscripten-module.SYNC.d.ts' > dist/emscripten-module.cloudflare.d.ts
+cat ../../templates/emscripten-module.SYNC.d.ts >> dist/emscripten-module.cloudflare.d.ts
