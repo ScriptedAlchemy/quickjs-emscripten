@@ -1,6 +1,6 @@
 /* eslint-disable */
 import primjsVariant from '@jitl/primjs-wasmfile-release-sync';
-import { newQuickJSWASMModule } from 'quickjs-emscripten-core';
+import { newQuickJSWASMModuleFromVariant } from 'quickjs-emscripten-core';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -14,7 +14,7 @@ async function testExecuteExposed() {
     console.log('📋 Host provides executeExposed(exposeName, exportName) function to QuickJS');
 
     // Initialize PrimJS
-    const QuickJS = await newQuickJSWASMModule(primjsVariant);
+    const QuickJS = await newQuickJSWASMModuleFromVariant(primjsVariant);
     const vm = QuickJS.newContext();
 
     // Handles we create – hoisted so finally{} can dispose them safely

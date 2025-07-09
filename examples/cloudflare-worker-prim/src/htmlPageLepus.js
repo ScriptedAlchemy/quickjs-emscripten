@@ -1,4 +1,4 @@
-// HTML page template for LEPUS/PrimJS Module Federation interface
+// HTML page template exported as a string for the Module Federation interface
 import { css } from './styles.js';
 
 export const htmlPage = `<!DOCTYPE html>
@@ -6,164 +6,143 @@ export const htmlPage = `<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEPUS/PrimJS Module Federation + Workers</title>
+    <title>Module Federation + Workers</title>
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="LEPUS/PrimJS Edge Module Federation - Cloudflare Workers">
-    <meta property="og:description" content="Native LEPUS/PrimJS Module Federation with Cloudflare Workers. Execute JavaScript modules at the edge with garbage collection, secure sandboxing, and micro-frontend architecture.">
+    <meta property="og:title" content="Edge Module Federation - Cloudflare Workers">
+    <meta property="og:description" content="Dynamic Module Federation with Cloudflare Workers. Execute JavaScript modules at the edge with secure sandboxing, real-time API integration, and micro-frontend architecture.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://cloudflare-workers-example.federation.workers.dev">
-    <meta property="og:image" content="https://cloudflare-workers-example.federation.workers.dev/og-image.png">
+    <meta property="og:url" content="https://cloudflare-workers.example.com">
+    <meta property="og:image" content="https://cloudflare-workers.example.com/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="LEPUS/PrimJS Edge Module Federation">
+    <meta property="og:site_name" content="Edge Module Federation">
     <meta property="og:locale" content="en_US">
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="LEPUS/PrimJS Edge Module Federation - Cloudflare Workers">
-    <meta name="twitter:description" content="Native LEPUS/PrimJS Module Federation with Cloudflare Workers. Execute JavaScript modules at the edge with garbage collection and secure sandboxing.">
-    <meta name="twitter:image" content="https://cloudflare-workers-example.federation.workers.dev/og-image.png">
-    <meta name="twitter:image:alt" content="LEPUS/PrimJS Edge Module Federation architecture diagram">
+    <meta name="twitter:title" content="Edge Module Federation - Cloudflare Workers">
+    <meta name="twitter:description" content="Dynamic Module Federation with Cloudflare Workers. Execute JavaScript modules at the edge with secure sandboxing and real-time API integration.">
+    <meta name="twitter:image" content="https://cloudflare-workers.example.com/og-image.png">
+    <meta name="twitter:image:alt" content="Edge Module Federation architecture diagram">
     
     <!-- Additional SEO Meta Tags -->
-    <meta name="description" content="LEPUS/PrimJS Edge Module Federation on Cloudflare Workers - Execute JavaScript modules dynamically at the edge with native LEPUS API, garbage collection, Module Federation architecture, and secure sandboxing.">
-    <meta name="keywords" content="LEPUS, PrimJS, Module Federation, Cloudflare Workers, Edge Computing, Micro-frontends, JavaScript, Garbage Collection, Serverless, Edge Runtime">
-    <meta name="author" content="LEPUS/PrimJS Edge Module Federation Team">
+    <meta name="description" content="Edge Module Federation on Cloudflare Workers - Execute JavaScript modules dynamically at the edge with secure sandboxing, Module Federation architecture, and real-time API integration.">
+    <meta name="keywords" content="Module Federation, Cloudflare Workers, Edge Computing, Micro-frontends, JavaScript, Dynamic Module Loading, Serverless, Edge Runtime">
+    <meta name="author" content="Edge Module Federation Team">
     <meta name="robots" content="index, follow">
     
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://cloudflare-workers-example.federation.workers.dev">
+    <link rel="canonical" href="https://cloudflare-workers.example.com">
     
     <style>
         ${css}
-        
-        /* Additional LEPUS-specific styles */
-        .lepus-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #ff6b6b;
-            color: white;
-            border-radius: 20px;
-            font-size: 0.8em;
-            margin-left: 10px;
-            font-weight: 600;
-        }
-        
-        .gc-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #10b981;
-            color: white;
-            border-radius: 20px;
-            font-size: 0.8em;
-            margin-left: 5px;
-        }
-        
-        .precompiled-notice {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-            color: #92400e;
-        }
-        
-        .operation-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            background: #e0e7ff;
-            color: #4338ca;
-            border-radius: 4px;
-            font-size: 0.85em;
-            font-family: 'Courier New', monospace;
-            margin: 2px;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚀 LEPUS/PrimJS Edge Module Federation <span class="lepus-badge">Native Mode</span><span class="gc-badge">GC Enabled</span></h1>
-            <p>Cloudflare Workers with Native LEPUS/PrimJS Execution</p>
+            <h1>🚀 Edge Module Federation</h1>
+            <p>Cloudflare Workers with Dynamic Module Execution</p>
         </div>
 
         <div class="content">
             <div class="section">
-                <h2>🧪 Module Tests</h2>
+                <h2>🧪 Module Federation Tests</h2>
                 <div class="test-grid">
-                    <a href="/execute-module?module=HelloWorld&function=greet" class="test-card">
-                        <h3>HelloWorld Module</h3>
-                        <p>Pre-compiled greeting module demonstrating LEPUS execution with parameters.</p>
-                        <span class="test-status status-working">✅ Pre-compiled</span>
+                    <a href="/arena-test" class="test-card">
+                        <h3>Simple Module Test</h3>
+                        <p>Dynamic Module Federation test demonstrating the working pattern with HelloWorld module.</p>
+                        <span class="test-status status-working">✅ Working</span>
                     </a>
 
-                    <a href="/execute-module?module=MathUtils&function=factorial" class="test-card">
-                        <h3>MathUtils Module</h3>
-                        <p>Mathematical operations including factorial, addition, and multiplication.</p>
-                        <span class="test-status status-working">✅ Pre-compiled</span>
+                    <a href="/test-module" class="test-card">
+                        <h3>Comprehensive Test</h3>
+                        <p>Full dynamic test of all Module Federation modules: HelloWorld, DataProcessor, WorkerUtils, and AdvancedExamples.</p>
+                        <span class="test-status status-working">✅ Working</span>
                     </a>
 
-                    <a href="/execute-module?module=StringUtils&function=reverse" class="test-card">
-                        <h3>StringUtils Module</h3>
-                        <p>String manipulation utilities with reverse, capitalize, and repeat functions.</p>
-                        <span class="test-status status-working">✅ Pre-compiled</span>
+                    <a href="/test-fetch" class="test-card">
+                        <h3>External API Fetch Test</h3>
+                        <p>Test FetchUtils module making real external API calls to JSONPlaceholder from within QuickJS.</p>
+                        <span class="test-status status-working">🌐 External API</span>
+                    </a>
+
+                    <a href="/test-real-fetch" class="test-card">
+                        <h3>🚀 Real External API Fetch Test</h3>
+                        <p>Live external API calls to JSONPlaceholder with real data fetching, user creation, and comprehensive testing.</p>
+                        <span class="test-status status-working">🌐 Live API</span>
                     </a>
 
                     <a href="/federation-demo" class="test-card">
                         <h3>Federation Demo</h3>
-                        <p>Overview of LEPUS/PrimJS Module Federation capabilities and available modules.</p>
+                        <p>Overview of Module Federation capabilities and available exposed modules.</p>
                         <span class="test-status status-demo">ℹ️ Info</span>
                     </a>
                 </div>
             </div>
 
             <div class="section">
-                <h2>📦 LEPUS/PrimJS Module Assets</h2>
+                <h2>📦 Module Federation Assets</h2>
                 <div class="test-grid">
                     <a href="/remoteEntry.js" class="test-card">
                         <h3>Remote Entry</h3>
-                        <p>Main Module Federation entry point for LEPUS/PrimJS modules.</p>
+                        <p>Main Module Federation entry point that bootstraps the federated modules.</p>
                         <span class="test-status status-demo">📄 File</span>
                     </a>
 
                     <a href="/assets/__federation_expose_HelloWorld.js" class="test-card">
                         <h3>HelloWorld Module</h3>
-                        <p>Pre-compiled HelloWorld module with LEPUS optimizations.</p>
+                        <p>Exposed HelloWorld module with greeting functions.</p>
                         <span class="test-status status-demo">📄 File</span>
                     </a>
 
                     <a href="/assets/__federation_expose_DataProcessor.js" class="test-card">
                         <h3>DataProcessor Module</h3>
-                        <p>Data manipulation utilities optimized for LEPUS execution.</p>
+                        <p>Data manipulation utilities for processing and aggregating data.</p>
                         <span class="test-status status-demo">📄 File</span>
                     </a>
                 </div>
             </div>
 
-            <div class="section">
-                <h2>🔧 Code Execution</h2>
-                <p style="margin-bottom: 20px;">Execute JavaScript code using LEPUS/PrimJS engine:</p>
+                        <div class="section">
+                <h2>🔧 Dynamic Code Execution</h2>
+                <p style="margin-bottom: 20px;">Execute arbitrary JavaScript code in a secure, sandboxed environment:</p>
+                <div class="info-notice" style="background: #f1f5f9; border-left: 4px solid #4338ca; padding: 15px; margin-bottom: 20px; border-radius: 6px; color: #1e293b;">
+                    <p style="margin: 0; color: #1e293b; font-size: 0.95rem; line-height: 1.5;">
+                        <strong>📢 IO Restrictions:</strong> We deliberately disable network access, file system operations, and external APIs in this dynamic code evaluation demonstration to prevent abuse of the public endpoint. However, full IO capabilities can be enabled when needed and are fully available for federation modules which run with complete access to fetch, KV storage, and other Cloudflare Worker APIs.
+                    </p>
+                </div>
 
                 <div class="code-executor">
                     <div class="code-input-section">
-                        <label for="user-code">JavaScript Code:</label>
-                        <textarea id="user-code" placeholder="// Enter JavaScript code...
+                        <label for="user-code">JavaScript Code (No fetch/IO access):</label>
+                        <textarea id="user-code" placeholder="// Enter your JavaScript code here...
 // Examples:
-// 5 + 3
-// Math.pow(2, 8)
-// 'Hello ' + 'LEPUS'
-// JSON.stringify({name: 'LEPUS', gc: true})
-// function factorial(n) { return n <= 1 ? 1 : n * factorial(n - 1); }
-// factorial(5)
+// console.log('Hello, World!');
+// const result = [1, 2, 3].map(x => x * 2);
+// result; // Last expression is returned
 
-10 * 5">10 * 5</textarea>
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map(n => n * 2);
+const sum = doubled.reduce((a, b) => a + b, 0);
+console.log('Numbers:', numbers);
+console.log('Doubled:', doubled);
+console.log('Sum:', sum);
+({ original: numbers, doubled, sum });">const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map(n => n * 2);
+const sum = doubled.reduce((a, b) => a + b, 0);
+console.log('Numbers:', numbers);
+console.log('Doubled:', doubled);
+console.log('Sum:', sum);
+({ original: numbers, doubled, sum });</textarea>
                         <div class="code-controls">
-                            <button onclick="executeUserCode()" class="execute-btn" id="code-execute-btn">Execute with LEPUS</button>
+                            <button onclick="executeUserCode()" class="execute-btn" id="code-execute-btn">Execute Code</button>
                             <button onclick="clearCode()" class="clear-btn">Clear</button>
                         </div>
                         <div class="sandbox-notice">
-                            🚀 <strong>LEPUS/PrimJS Engine:</strong> Full JavaScript execution with garbage collection enabled.
+                            🔒 <strong>Sandboxed Environment:</strong> No network access, no file system, no external APIs.
+                            Pure JavaScript computation only.
                         </div>
                     </div>
                     <div id="code-result" class="result-display"></div>
@@ -172,57 +151,64 @@ export const htmlPage = `<!DOCTYPE html>
 
             <div class="section">
                 <h2>🎮 Interactive Module Execution</h2>
-                <p style="margin-bottom: 20px;">Execute LEPUS/PrimJS modules with custom parameters:</p>
+                <p style="margin-bottom: 20px;">Execute Module Federation modules directly with custom parameters:</p>
 
                 <div class="interactive-section">
                     <div class="module-executor">
                         <h3>HelloWorld Module</h3>
                         <div class="input-group">
                             <label for="hello-name">Name:</label>
-                            <input type="text" id="hello-name" value="LEPUS User" placeholder="Enter your name">
+                            <input type="text" id="hello-name" value="Interactive User" placeholder="Enter your name">
                         </div>
-                        <button onclick="executeHelloWorld()" class="execute-btn">Execute with LEPUS</button>
+                        <div class="input-group">
+                            <label for="hello-message">Message:</label>
+                            <input type="text" id="hello-message" value="Greetings from" placeholder="Enter message">
+                        </div>
+                        <button onclick="executeHelloWorld()" class="execute-btn">Execute HelloWorld</button>
                         <div id="hello-result" class="result-display"></div>
                     </div>
 
                     <div class="module-executor">
-                        <h3>MathUtils Module</h3>
+                        <h3>DataProcessor Module</h3>
                         <div class="input-group">
-                            <label for="math-n">Calculate Factorial of:</label>
-                            <input type="number" id="math-n" value="5" min="1" max="20">
+                            <label for="data-count">Sample Data Count:</label>
+                            <input type="number" id="data-count" value="5" min="1" max="20">
                         </div>
-                        <button onclick="executeMathUtils()" class="execute-btn">Calculate with LEPUS</button>
-                        <div id="math-result" class="result-display"></div>
+                        <button onclick="executeDataProcessor()" class="execute-btn">Generate & Process Data</button>
+                        <div id="data-result" class="result-display"></div>
                     </div>
 
                     <div class="module-executor">
-                        <h3>StringUtils Module</h3>
+                        <h3>WorkerUtils Module</h3>
                         <div class="input-group">
-                            <label for="string-text">Text:</label>
-                            <input type="text" id="string-text" value="Hello LEPUS" placeholder="Enter text">
+                            <label for="route-path">Route Path:</label>
+                            <input type="text" id="route-path" value="/health" placeholder="Enter route path">
                         </div>
+                        <button onclick="executeWorkerUtils()" class="execute-btn">Test Route Handler</button>
+                        <div id="worker-result" class="result-display"></div>
+                    </div>
+
+                    <div class="module-executor">
+                        <h3>FetchUtils Module</h3>
                         <div class="input-group">
-                            <label for="string-operation">Operation:</label>
-                            <select id="string-operation">
-                                <option value="reverse">Reverse</option>
-                                <option value="capitalize">Capitalize</option>
-                                <option value="repeat">Repeat (3x)</option>
-                            </select>
+                            <label for="posts-count">Posts Count:</label>
+                            <input type="number" id="posts-count" value="3" min="1" max="10">
                         </div>
-                        <button onclick="executeStringUtils()" class="execute-btn">Process with LEPUS</button>
-                        <div id="string-result" class="result-display"></div>
+                        <button onclick="executeFetchUtils()" class="execute-btn">Fetch External API Data</button>
+                        <div id="fetch-result" class="result-display"></div>
                     </div>
 
                 </div>
             </div>
 
+
             <div class="section">
-                <h2>📚 LEPUS/PrimJS API Documentation</h2>
-                <p style="margin-bottom: 20px;">Use these REST API endpoints to execute pre-compiled operations and modules:</p>
+                <h2>📚 API Documentation</h2>
+                <p style="margin-bottom: 20px;">Use these REST API endpoints to execute code and modules programmatically:</p>
 
                 <div class="api-documentation" style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 20px; color: #1e293b;">
                     <div style="margin-bottom: 25px;">
-                        <h4 style="color: #1e293b; margin-bottom: 10px;">🔧 Pre-compiled Operations</h4>
+                        <h4 style="color: #1e293b; margin-bottom: 10px;">🔧 Code Execution</h4>
                         <div style="background: #1e293b; color: #e2e8f0; padding: 15px; border-radius: 6px; font-family: 'Courier New', monospace; margin-bottom: 15px;">
                             <div><strong>POST</strong> /code</div>
                             <div style="margin-top: 8px; color: #94a3b8;">Content-Type: application/json</div>
@@ -231,20 +217,17 @@ export const htmlPage = `<!DOCTYPE html>
                         <div style="margin-bottom: 15px;">
                             <strong style="color: #1e293b;">Request Body:</strong>
                             <pre style="background: #f1f5f9; padding: 12px; border-radius: 4px; margin-top: 5px; overflow-x: auto; color: #1e293b;"><code>{
-  "code": "math.add(10, 20)"
+  "code": "const result = [1, 2, 3].map(x => x * 2); console.log('Result:', result); result;"
 }</code></pre>
                         </div>
 
                         <div style="margin-bottom: 15px;">
                             <strong style="color: #1e293b;">Response:</strong>
                             <pre style="background: #f1f5f9; padding: 12px; border-radius: 4px; margin-top: 5px; overflow-x: auto; color: #1e293b;"><code>{
+  "result": [2, 4, 6],
+  "logs": ["[VM] Result: 2,4,6"],
   "success": true,
-  "result": 30,
-  "engine": "LEPUS/PrimJS",
-  "gc_enabled": true,
-  "execution_time_ms": 0,
-  "timestamp": "2025-07-08T20:51:05.793Z",
-  "note": "Cloudflare Workers restricts dynamic code evaluation. Using pre-compiled operations."
+  "executionTime": 45
 }</code></pre>
                         </div>
                     </div>
@@ -260,8 +243,8 @@ export const htmlPage = `<!DOCTYPE html>
                             <strong style="color: #1e293b;">Request Body:</strong>
                             <pre style="background: #f1f5f9; padding: 12px; border-radius: 4px; margin-top: 5px; overflow-x: auto; color: #1e293b;"><code>{
   "module": "HelloWorld",
-  "function": "greet",
-  "params": {"name": "LEPUS API"}
+  "function": "helloWorld",
+  "params": {"name": "API User", "message": "Hello from API"}
 }</code></pre>
                         </div>
 
@@ -269,122 +252,203 @@ export const htmlPage = `<!DOCTYPE html>
                             <strong style="color: #1e293b;">Response:</strong>
                             <pre style="background: #f1f5f9; padding: 12px; border-radius: 4px; margin-top: 5px; overflow-x: auto; color: #1e293b;"><code>{
   "success": true,
-  "result": "Hello, LEPUS API!",
-  "module": "HelloWorld",
-  "function": "greet",
-  "engine": "LEPUS/PrimJS",
-  "gc_enabled": true,
-  "timestamp": "2025-07-08T20:51:12.960Z",
-  "available_modules": ["HelloWorld", "MathUtils", "StringUtils"]
+  "execution": {
+    "result": "Hello, API User! Hello from API",
+    "module": "HelloWorld",
+    "function": "helloWorld"
+  },
+  "logs": ["[VM] Module execution completed"],
+  "iterations": 3
 }</code></pre>
                         </div>
                     </div>
 
                     <div style="color: #1e293b; font-size: 0.9rem;">
-                        <strong>💡 Available Pre-compiled Operations:</strong>
+                        <strong>💡 Usage Examples:</strong>
                         <ul style="margin-left: 20px; margin-top: 8px;">
-                            <li><span class="operation-badge">5 + 3</span> Simple arithmetic</li>
-                            <li><span class="operation-badge">math.add(a, b)</span> Addition function</li>
-                            <li><span class="operation-badge">math.multiply(a, b)</span> Multiplication</li>
-                            <li><span class="operation-badge">math.sqrt(n)</span> Square root</li>
-                            <li><span class="operation-badge">string.concat(...args)</span> String concatenation</li>
-                            <li><span class="operation-badge">string.toUpperCase(str)</span> Convert to uppercase</li>
-                            <li><span class="operation-badge">json.stringify(obj)</span> JSON serialization</li>
+                            <li>Mathematical calculations and data processing</li>
+                            <li>String manipulation and text analysis</li>
+                            <li>Algorithm testing and prototyping</li>
+                            <li>Module Federation execution with parameters</li>
+                            <li>External API data fetching via FetchUtils module</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
             <div class="section">
-                <h2>📖 How LEPUS/PrimJS Works on Cloudflare</h2>
-                <p style="margin-bottom: 20px;">This Cloudflare Worker demonstrates LEPUS/PrimJS with Module Federation on the edge:</p>
+                <h2>📖 How It Works</h2>
+                <p style="margin-bottom: 20px;">This Cloudflare Worker demonstrates advanced Module Federation patterns running on the edge:</p>
 
                 <div style="margin-bottom: 30px;">
-                    <h3 style="color: #4338ca; margin-bottom: 15px;">🏗️ LEPUS/PrimJS Architecture</h3>
-                    <p style="margin-bottom: 15px;">LEPUS is the native API for PrimJS, a high-performance JavaScript engine based on QuickJS with garbage collection instead of reference counting.</p>
+                    <h3 style="color: #4338ca; margin-bottom: 15px;">🏗️ Module Federation Architecture</h3>
+                    <p style="margin-bottom: 15px;">Module Federation enables micro-frontend architecture where modules can be developed, built, and deployed independently while sharing runtime dependencies and state.</p>
                     <ul style="margin-left: 20px; margin-bottom: 20px; line-height: 1.6;">
-                        <li><strong>Native API:</strong> Direct LEPUS API usage without QuickJS compatibility layer</li>
-                        <li><strong>Garbage Collection:</strong> Automatic memory management with <code>runGC()</code> and <code>isGCMode()</code></li>
-                        <li><strong>Pre-compiled Operations:</strong> Safe execution within Cloudflare's security constraints</li>
-                        <li><strong>Module Registry:</strong> Pre-registered modules for secure execution</li>
+                        <li><strong>Federated Modules:</strong> Each module (HelloWorld, DataProcessor, WorkerUtils, FetchUtils) is built as an independent bundle with its own dependencies</li>
+                        <li><strong>Remote Entry:</strong> The main federation entry point that orchestrates module loading and dependency resolution</li>
+                        <li><strong>Shared Dependencies:</strong> Common libraries are shared across modules to reduce bundle size and prevent duplication</li>
+                        <li><strong>Dynamic Imports:</strong> Modules are loaded on-demand at runtime, enabling true code splitting and lazy loading</li>
                     </ul>
                 </div>
 
                 <div style="margin-bottom: 30px;">
-                    <h3 style="color: #4338ca; margin-bottom: 15px;">🔧 Pre-compilation Strategy</h3>
-                    <p style="margin-bottom: 15px;">Due to Cloudflare's security restrictions on dynamic code evaluation, LEPUS modules are pre-compiled:</p>
+                    <h3 style="color: #4338ca; margin-bottom: 15px;">🔧 Build Process & Asset Management</h3>
+                    <p style="margin-bottom: 15px;">The federation setup uses Rsbuild (based on Rspack) to create optimized, federated bundles:</p>
                     <ul style="margin-left: 20px; margin-bottom: 20px; line-height: 1.6;">
-                        <li><strong>Operation Parser:</strong> Simple expressions are parsed and mapped to pre-compiled functions</li>
-                        <li><strong>Module Registry:</strong> Modules are pre-registered with typed functions</li>
-                        <li><strong>Safe Execution:</strong> All operations run without eval/Function constructors</li>
-                        <li><strong>Performance:</strong> Pre-compiled operations execute with zero overhead</li>
+                        <li><strong>Rsbuild Configuration:</strong> Defines module federation settings, exposed modules, and shared dependencies</li>
+                        <li><strong>Code Splitting:</strong> Each federated module is split into separate chunks for optimal loading</li>
+                        <li><strong>Asset Optimization:</strong> Modules are minified, compressed, and optimized for edge delivery</li>
+                        <li><strong>KV Storage:</strong> Built federation assets are stored in Cloudflare KV for global distribution and fast access</li>
                     </ul>
                 </div>
 
                 <div style="margin-bottom: 30px;">
-                    <h3 style="color: #4338ca; margin-bottom: 15px;">🌐 Edge Runtime Integration</h3>
-                    <p style="margin-bottom: 15px;">LEPUS/PrimJS integrates seamlessly with Cloudflare Workers:</p>
+                    <h3 style="color: #4338ca; margin-bottom: 15px;">🌐 Edge Runtime Execution</h3>
+                    <p style="margin-bottom: 15px;">The Worker runtime provides a secure, isolated environment for dynamic module execution:</p>
                     <ul style="margin-left: 20px; margin-bottom: 20px; line-height: 1.6;">
-                        <li><strong>WASM Module:</strong> PrimJS compiled to WebAssembly for edge execution</li>
-                        <li><strong>Global Distribution:</strong> LEPUS modules cached at edge locations worldwide</li>
-                        <li><strong>Resource Management:</strong> Automatic garbage collection prevents memory leaks</li>
-                        <li><strong>Security Sandbox:</strong> Runs within Cloudflare's secure V8 isolates</li>
+                        <li><strong>Sandboxed Environment:</strong> Each module execution runs in an isolated context with controlled access to APIs</li>
+                        <li><strong>Dynamic Module Loading:</strong> Modules are fetched from KV storage and instantiated at runtime</li>
+                        <li><strong>Cross-Context Communication:</strong> Secure parameter passing and result marshalling between execution contexts</li>
+                        <li><strong>Resource Management:</strong> Automatic cleanup of execution contexts and memory management</li>
                     </ul>
                 </div>
 
                 <div style="margin-bottom: 30px;">
-                    <h3 style="color: #4338ca; margin-bottom: 15px;">🔄 LEPUS Execution Flow</h3>
+                    <h3 style="color: #4338ca; margin-bottom: 15px;">🔄 Federation Lifecycle</h3>
+                    <p style="margin-bottom: 15px;">The complete federation process from request to response:</p>
                     <div style="background: #f8fafc; border-left: 4px solid #4338ca; padding: 15px; margin-bottom: 20px; border-radius: 6px;">
                         <ol style="margin-left: 20px; line-height: 1.8;">
-                            <li><strong>Initialize LEPUS:</strong> Create LEPUS module with <code>createLEPUSModule()</code></li>
-                            <li><strong>Parse Operation:</strong> Map input to pre-compiled function or module</li>
-                            <li><strong>Execute Safely:</strong> Run operation without dynamic evaluation</li>
-                            <li><strong>Garbage Collection:</strong> Automatic cleanup with PrimJS GC</li>
-                            <li><strong>Return Result:</strong> Serialize and return execution results</li>
+                            <li><strong>Module Resolution:</strong> Worker identifies which federated module to load based on request</li>
+                            <li><strong>Asset Retrieval:</strong> Module bundle is fetched from KV storage with edge caching</li>
+                            <li><strong>Runtime Instantiation:</strong> Module code is loaded and initialized in secure execution context</li>
+                            <li><strong>Function Execution:</strong> Target function is called with sanitized parameters</li>
+                            <li><strong>Result Marshalling:</strong> Execution results are serialized and returned to client</li>
+                            <li><strong>Context Cleanup:</strong> Execution environment is cleaned up to prevent memory leaks</li>
                         </ol>
                     </div>
                 </div>
 
                 <div style="margin-bottom: 30px;">
-                    <h3 style="color: #4338ca; margin-bottom: 15px;">⚡ Performance Benefits</h3>
+                    <h3 style="color: #4338ca; margin-bottom: 15px;">🛡️ Security & Isolation</h3>
+                    <p style="margin-bottom: 15px;">Multiple layers of security ensure safe execution of federated modules:</p>
                     <ul style="margin-left: 20px; margin-bottom: 20px; line-height: 1.6;">
-                        <li><strong>Garbage Collection:</strong> No manual memory management needed</li>
-                        <li><strong>Pre-compiled Speed:</strong> Zero parsing overhead for operations</li>
-                        <li><strong>Edge Caching:</strong> WASM modules cached globally</li>
-                        <li><strong>Native Performance:</strong> Direct LEPUS API without compatibility layers</li>
+                        <li><strong>Execution Sandboxing:</strong> Modules run in isolated environments with limited access to system resources</li>
+                        <li><strong>API Restrictions:</strong> Controlled access to external APIs and network resources based on module permissions</li>
+                        <li><strong>Parameter Validation:</strong> Input sanitization and type checking prevent code injection attacks</li>
+                        <li><strong>Memory Limits:</strong> Resource quotas prevent modules from consuming excessive memory or CPU</li>
                     </ul>
                 </div>
 
                 <div style="margin-bottom: 20px;">
-                    <h3 style="color: #4338ca; margin-bottom: 15px;">🛡️ Security & Limitations</h3>
+                    <h3 style="color: #4338ca; margin-bottom: 15px;">⚡ Performance Optimizations</h3>
                     <ul style="margin-left: 20px; margin-bottom: 20px; line-height: 1.6;">
-                        <li><strong>No Dynamic Eval:</strong> Cloudflare prohibits eval/Function for security</li>
-                        <li><strong>Pre-compiled Only:</strong> All operations must be pre-registered</li>
-                        <li><strong>Type Safety:</strong> Input validation prevents injection attacks</li>
-                        <li><strong>Resource Limits:</strong> Cloudflare's standard Worker limits apply</li>
+                        <li><strong>Edge Caching:</strong> Federated modules are cached globally for sub-50ms load times</li>
+                        <li><strong>Lazy Loading:</strong> Modules are loaded only when needed, reducing initial bundle size</li>
+                        <li><strong>Shared Dependencies:</strong> Common libraries are loaded once and shared across modules</li>
+                        <li><strong>Bundle Optimization:</strong> Tree shaking and dead code elimination reduce module size</li>
                     </ul>
                 </div>
             </div>
         </div>
 
         <div class="footer">
-            <p>Powered by LEPUS/PrimJS on Cloudflare Workers • Native Garbage Collection</p>
+            <p>Powered by Cloudflare Workers • Built with Module Federation</p>
             <div class="tech-stack">
-                <span class="tech-badge">LEPUS Native API</span>
-                <span class="tech-badge">PrimJS 2.11.1</span>
-                <span class="tech-badge">Garbage Collection</span>
-                <span class="tech-badge">Cloudflare Workers</span>
                 <span class="tech-badge">Module Federation</span>
+                <span class="tech-badge">Rsbuild</span>
+                <span class="tech-badge">Cloudflare Workers</span>
+                <span class="tech-badge">KV Storage</span>
             </div>
         </div>
     </div>
 
     <script>
+
+        async function executeHelloWorld() {
+            const name = document.getElementById('hello-name').value;
+            const message = document.getElementById('hello-message').value;
+            const button = event.target;
+
+            const params = { name, message };
+            await executeModuleFederation('HelloWorld', 'helloWorld', params, 'hello-result', button, 'Execute HelloWorld');
+        }
+
+        async function executeDataProcessor() {
+            const count = parseInt(document.getElementById('data-count').value) || 5;
+            const button = event.target;
+
+            // DataProcessor.generateSampleData expects a simple number, not an object
+            const params = count;
+            await executeModuleFederation('DataProcessor', 'generateSampleData', params, 'data-result', button, 'Generate & Process Data');
+        }
+
+        async function executeWorkerUtils() {
+            const routePath = document.getElementById('route-path').value || '/health';
+            const button = event.target;
+
+            // WorkerUtils.routeHandler expects a simple string, not an object
+            const params = routePath;
+            await executeModuleFederation('WorkerUtils', 'routeHandler', params, 'worker-result', button, 'Test Route Handler');
+        }
+
+        async function executeFetchUtils() {
+            const count = parseInt(document.getElementById('posts-count').value) || 3;
+            const button = event.target;
+
+            // FetchUtils.demonstrateFetchCapabilities expects an empty object (it doesn't use count parameter)
+            const params = {};
+            await executeModuleFederation('FetchUtils', 'demonstrateFetchCapabilities', params, 'fetch-result', button, 'Fetch External API Data');
+        }
+
         // Utility function to escape HTML to prevent XSS
         function escapeHtml(text) {
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
+        }
+
+        // Copy result to clipboard
+        function copyResult(button) {
+            const resultElement = button.closest('.result-display');
+            let textToCopy = '';
+
+            // Extract text content from the result display
+            const logEntries = resultElement.querySelectorAll('.log-entry');
+            if (logEntries.length > 0) {
+                textToCopy += '=== Console Logs ===\\n';
+                logEntries.forEach(entry => {
+                    textToCopy += entry.textContent + '\\n';
+                });
+                textToCopy += '\\n';
+            }
+
+            const resultContent = resultElement.querySelector('.result-content, .error-content');
+            if (resultContent) {
+                if (resultElement.classList.contains('error')) {
+                    textToCopy += '=== Error ===\\n';
+                } else {
+                    textToCopy += '=== Result ===\\n';
+                }
+                textToCopy += resultContent.textContent;
+            }
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // Show feedback
+                const originalText = button.textContent;
+                button.textContent = '✅ Copied!';
+                button.disabled = true;
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                button.textContent = '❌ Failed';
+                setTimeout(() => {
+                    button.textContent = '📋 Copy';
+                }, 2000);
+            });
         }
 
         async function executeUserCode() {
@@ -397,7 +461,7 @@ export const htmlPage = `<!DOCTYPE html>
 
             if (!code) {
                 resultElement.className = 'result-display error';
-                resultElement.textContent = 'Please enter a pre-compiled operation to execute.';
+                resultElement.textContent = 'Please enter some JavaScript code to execute.';
                 return;
             }
 
@@ -408,7 +472,7 @@ export const htmlPage = `<!DOCTYPE html>
             button.disabled = true;
             button.textContent = 'Executing...';
             resultElement.className = 'result-display loading';
-            resultElement.textContent = 'Executing with LEPUS/PrimJS...';
+            resultElement.textContent = 'Executing code in sandboxed environment...';
 
             try {
                 const response = await fetch('/code', {
@@ -423,59 +487,75 @@ export const htmlPage = `<!DOCTYPE html>
                 // Calculate total request time
                 const totalTime = Math.round(performance.now() - startTime);
 
-                console.log('LEPUS Execution Response:', data);
+                console.log('Code Execution Response:', data); // Debug logging
 
-                if (data.success) {
+                                if (data.result !== undefined || data.logs) {
                     resultElement.className = 'result-display success';
 
+                    // Create structured HTML output
                     let htmlOutput = '';
 
                     // Show execution info
                     htmlOutput += '<div class="execution-header">';
-                    htmlOutput += '<span class="execution-badge success">✅ LEPUS Execution Successful</span>';
+                    htmlOutput += '<span class="execution-badge success">✅ Executed Successfully</span>';
                     htmlOutput += '<div class="execution-actions">';
                     htmlOutput += '<span class="execution-time">' + new Date().toLocaleTimeString() + '</span>';
                     htmlOutput += '<span class="timing-info" style="margin-left: 10px; font-size: 0.9em; color: #10b981;">⚡ ' + totalTime + 'ms total</span>';
-                    if (data.execution_time_ms !== undefined) {
-                        htmlOutput += '<span class="timing-info" style="margin-left: 10px; font-size: 0.9em; color: #6b7280;">🔧 ' + data.execution_time_ms + 'ms execution</span>';
-                    }
-                    if (data.gc_enabled) {
-                        htmlOutput += '<span class="gc-badge" style="margin-left: 10px;">GC Enabled</span>';
+                    if (data.executionTime) {
+                        htmlOutput += '<span class="timing-info" style="margin-left: 10px; font-size: 0.9em; color: #6b7280;">🔧 ' + data.executionTime + 'ms execution</span>';
                     }
                     htmlOutput += '</div>';
                     htmlOutput += '</div>';
 
-                    // Show result
-                    htmlOutput += '<div class="result-section">';
-                    htmlOutput += '<div class="section-header">📊 Result</div>';
-                    htmlOutput += '<div class="result-content">';
-
-                    if (typeof data.result === 'object') {
-                        htmlOutput += '<pre class="json-result">' + escapeHtml(JSON.stringify(data.result, null, 2)) + '</pre>';
-                    } else if (typeof data.result === 'string') {
-                        htmlOutput += '<div class="string-result">"' + escapeHtml(data.result) + '"</div>';
-                    } else {
-                        htmlOutput += '<div class="primitive-result">' + escapeHtml(String(data.result)) + '</div>';
-                    }
-
-                    htmlOutput += '</div></div>';
-
-                    // Show engine info
-                    if (data.engine || data.note) {
-                        htmlOutput += '<div class="result-section">';
-                        htmlOutput += '<div class="section-header">ℹ️ Engine Info</div>';
-                        htmlOutput += '<div class="result-content" style="font-size: 0.9em; color: #6b7280;">';
-                        if (data.engine) {
-                            htmlOutput += '<div><strong>Engine:</strong> ' + escapeHtml(data.engine) + '</div>';
-                        }
-                        if (data.note) {
-                            htmlOutput += '<div style="margin-top: 5px;">' + escapeHtml(data.note) + '</div>';
-                        }
+                    // Show logs if any
+                    if (data.logs && data.logs.length > 0) {
+                        htmlOutput += '<div class="logs-section">';
+                        htmlOutput += '<div class="section-header">📝 Console Logs</div>';
+                        htmlOutput += '<div class="logs-content">';
+                        data.logs.forEach(log => {
+                            const cleanLog = log.replace(/\\[VM\\]\\s*/, '');
+                            htmlOutput += '<div class="log-entry">' + escapeHtml(cleanLog) + '</div>';
+                        });
                         htmlOutput += '</div></div>';
                     }
 
+                    // Show result
+                    if (data.result !== undefined) {
+                        htmlOutput += '<div class="result-section">';
+                        htmlOutput += '<div class="section-header">📊 Result</div>';
+                        htmlOutput += '<div class="result-content">';
+
+                        if (typeof data.result === 'object') {
+                            htmlOutput += '<pre class="json-result">' + escapeHtml(JSON.stringify(data.result, null, 2)) + '</pre>';
+                        } else if (typeof data.result === 'string') {
+                            htmlOutput += '<div class="string-result">"' + escapeHtml(data.result) + '"</div>';
+                        } else {
+                            htmlOutput += '<div class="primitive-result">' + escapeHtml(String(data.result)) + '</div>';
+                        }
+
+                        htmlOutput += '</div></div>';
+                    } else if (data.error) {
+                        resultElement.className = 'result-display error';
+                        htmlOutput = '<div class="execution-header">';
+                        htmlOutput += '<span class="execution-badge error">❌ Execution Error</span>';
+                        htmlOutput += '<div class="execution-actions">';
+                        htmlOutput += '<span class="execution-time">' + new Date().toLocaleTimeString() + '</span>';
+                        htmlOutput += '<span class="timing-info" style="margin-left: 10px; font-size: 0.9em; color: #10b981;">⚡ ' + totalTime + 'ms total</span>';
+                        htmlOutput += '</div>';
+                        htmlOutput += '</div>';
+                        htmlOutput += '<div class="error-section">';
+                        htmlOutput += '<div class="section-header">⚠️ Error Details</div>';
+                        htmlOutput += '<div class="error-content">' + escapeHtml(data.error) + '</div>';
+                        htmlOutput += '</div>';
+                    } else if (!data.logs || data.logs.length === 0) {
+                        htmlOutput += '<div class="result-section">';
+                        htmlOutput += '<div class="section-header">✅ Success</div>';
+                        htmlOutput += '<div class="result-content">Code executed successfully (no return value)</div>';
+                        htmlOutput += '</div>';
+                    }
+
                     resultElement.innerHTML = htmlOutput;
-                } else {
+                                } else if (data.error) {
                     resultElement.className = 'result-display error';
                     let errorOutput = '<div class="execution-header">';
                     errorOutput += '<span class="execution-badge error">❌ Execution Failed</span>';
@@ -486,12 +566,29 @@ export const htmlPage = `<!DOCTYPE html>
                     errorOutput += '</div>';
                     errorOutput += '<div class="error-section">';
                     errorOutput += '<div class="section-header">⚠️ Error Details</div>';
-                    errorOutput += '<div class="error-content">' + escapeHtml(data.error || 'Unknown error') + '</div>';
-                    if (data.hint) {
-                        errorOutput += '<div class="error-help" style="margin-top: 10px; font-size: 0.9em; color: #6b7280;">' + escapeHtml(data.hint) + '</div>';
+                    errorOutput += '<div class="error-content">' + escapeHtml(data.error) + '</div>';
+                    if (data.context || data.stack) {
+                        errorOutput += '<div class="debug-section">';
+                        errorOutput += '<div class="section-header">🔍 Debug Information</div>';
+                        errorOutput += '<pre class="debug-content">' + escapeHtml(JSON.stringify(data, null, 2)) + '</pre>';
+                        errorOutput += '</div>';
                     }
                     errorOutput += '</div>';
                     resultElement.innerHTML = errorOutput;
+                } else {
+                    resultElement.className = 'result-display error';
+                    let unexpectedOutput = '<div class="execution-header">';
+                    unexpectedOutput += '<span class="execution-badge error">⚠️ Unexpected Response</span>';
+                    unexpectedOutput += '<div class="execution-actions">';
+                    unexpectedOutput += '<span class="execution-time">' + new Date().toLocaleTimeString() + '</span>';
+                    unexpectedOutput += '<span class="timing-info" style="margin-left: 10px; font-size: 0.9em; color: #10b981;">⚡ ' + totalTime + 'ms total</span>';
+                    unexpectedOutput += '</div>';
+                    unexpectedOutput += '</div>';
+                    unexpectedOutput += '<div class="error-section">';
+                    unexpectedOutput += '<div class="section-header">📋 Raw Response</div>';
+                    unexpectedOutput += '<pre class="debug-content">' + escapeHtml(JSON.stringify(data, null, 2)) + '</pre>';
+                    unexpectedOutput += '</div>';
+                    resultElement.innerHTML = unexpectedOutput;
                 }
             } catch (error) {
                 const totalTime = Math.round(performance.now() - startTime);
@@ -506,6 +603,7 @@ export const htmlPage = `<!DOCTYPE html>
                 networkErrorOutput += '<div class="error-section">';
                 networkErrorOutput += '<div class="section-header">⚠️ Connection Problem</div>';
                 networkErrorOutput += '<div class="error-content">' + escapeHtml(error.message) + '</div>';
+                networkErrorOutput += '<div class="error-help">This could indicate a problem with the code execution endpoint or your network connection.</div>';
                 networkErrorOutput += '</div>';
                 resultElement.innerHTML = networkErrorOutput;
             } finally {
@@ -523,31 +621,6 @@ export const htmlPage = `<!DOCTYPE html>
             resultElement.textContent = '';
         }
 
-        async function executeHelloWorld() {
-            const name = document.getElementById('hello-name').value;
-            const button = event.target;
-            await executeModuleFederation('HelloWorld', 'greet', { name }, 'hello-result', button, 'Execute with LEPUS');
-        }
-
-        async function executeMathUtils() {
-            const n = parseInt(document.getElementById('math-n').value) || 5;
-            const button = event.target;
-            await executeModuleFederation('MathUtils', 'factorial', { n }, 'math-result', button, 'Calculate with LEPUS');
-        }
-
-        async function executeStringUtils() {
-            const text = document.getElementById('string-text').value;
-            const operation = document.getElementById('string-operation').value;
-            const button = event.target;
-            
-            let params = { text };
-            if (operation === 'repeat') {
-                params.times = 3;
-            }
-            
-            await executeModuleFederation('StringUtils', operation, params, 'string-result', button, 'Process with LEPUS');
-        }
-
         async function executeModuleFederation(module, func, params, resultElementId, button, originalText) {
             const resultElement = document.getElementById(resultElementId);
 
@@ -558,7 +631,7 @@ export const htmlPage = `<!DOCTYPE html>
             button.disabled = true;
             button.textContent = 'Executing...';
             resultElement.className = 'result-display loading';
-            resultElement.textContent = 'Executing LEPUS/PrimJS Module...';
+            resultElement.textContent = 'Executing real Module Federation...';
 
             try {
                 const response = await fetch('/execute-module', {
@@ -577,59 +650,54 @@ export const htmlPage = `<!DOCTYPE html>
                 // Calculate total request time
                 const totalTime = Math.round(performance.now() - startTime);
 
-                console.log('LEPUS Module Response:', data);
+                console.log('API Response:', data); // Debug logging
 
                 if (data.success) {
                     resultElement.className = 'result-display success';
 
+                    // Create structured HTML output (same as code execution)
                     let htmlOutput = '';
 
                     // Show execution info
                     htmlOutput += '<div class="execution-header">';
-                    htmlOutput += '<span class="execution-badge success">✅ LEPUS Module Executed</span>';
+                    htmlOutput += '<span class="execution-badge success">✅ Module Executed Successfully</span>';
                     htmlOutput += '<div class="execution-actions">';
                     htmlOutput += '<span class="execution-time">' + new Date().toLocaleTimeString() + '</span>';
                     htmlOutput += '<span class="timing-info" style="margin-left: 10px; font-size: 0.9em; color: #10b981;">⚡ ' + totalTime + 'ms total</span>';
-                    if (data.gc_enabled) {
-                        htmlOutput += '<span class="gc-badge" style="margin-left: 10px;">GC Enabled</span>';
-                    }
                     htmlOutput += '</div>';
                     htmlOutput += '</div>';
 
-                    // Show module info
-                    htmlOutput += '<div class="result-section">';
-                    htmlOutput += '<div class="section-header">🚀 Module Execution</div>';
-                    htmlOutput += '<div class="result-content">';
-                    htmlOutput += '<div class="execution-details">';
-                    htmlOutput += '<div><strong>Module:</strong> ' + escapeHtml(data.module) + '</div>';
-                    htmlOutput += '<div><strong>Function:</strong> ' + escapeHtml(data.function) + '</div>';
-                    htmlOutput += '<div><strong>Engine:</strong> ' + escapeHtml(data.engine || 'LEPUS/PrimJS') + '</div>';
-                    htmlOutput += '</div>';
-                    htmlOutput += '</div></div>';
-
-                    // Show result
-                    htmlOutput += '<div class="result-section">';
-                    htmlOutput += '<div class="section-header">📊 Result</div>';
-                    htmlOutput += '<div class="result-content">';
-
-                    if (typeof data.result === 'object') {
-                        htmlOutput += '<pre class="json-result">' + escapeHtml(JSON.stringify(data.result, null, 2)) + '</pre>';
-                    } else if (typeof data.result === 'string') {
-                        htmlOutput += '<div class="string-result">"' + escapeHtml(data.result) + '"</div>';
-                    } else {
-                        htmlOutput += '<div class="primitive-result">' + escapeHtml(String(data.result)) + '</div>';
-                    }
-
-                    htmlOutput += '</div></div>';
-
-                    // Show available modules
-                    if (data.available_modules && data.available_modules.length > 0) {
+                    // Show module execution details
+                    if (data.execution && data.execution.module) {
                         htmlOutput += '<div class="result-section">';
-                        htmlOutput += '<div class="section-header">📦 Available Modules</div>';
-                        htmlOutput += '<div class="result-content" style="font-size: 0.9em;">';
-                        data.available_modules.forEach(mod => {
-                            htmlOutput += '<span class="operation-badge" style="margin-right: 5px;">' + escapeHtml(mod) + '</span>';
-                        });
+                        htmlOutput += '<div class="section-header">🚀 Module Execution Details</div>';
+                        htmlOutput += '<div class="result-content">';
+                        htmlOutput += '<div class="execution-details">';
+                        htmlOutput += '<div><strong>Module:</strong> ' + escapeHtml(data.execution.module) + '</div>';
+                        htmlOutput += '<div><strong>Function:</strong> ' + escapeHtml(data.execution.function) + '</div>';
+                        htmlOutput += '</div>';
+                        htmlOutput += '</div></div>';
+
+                        // Show result
+                        htmlOutput += '<div class="result-section">';
+                        htmlOutput += '<div class="section-header">📊 Result</div>';
+                        htmlOutput += '<div class="result-content">';
+
+                        if (typeof data.execution.result === 'object') {
+                            htmlOutput += '<pre class="json-result">' + escapeHtml(JSON.stringify(data.execution.result, null, 2)) + '</pre>';
+                        } else if (typeof data.execution.result === 'string') {
+                            htmlOutput += '<div class="string-result">"' + escapeHtml(data.execution.result) + '"</div>';
+                        } else {
+                            htmlOutput += '<div class="primitive-result">' + escapeHtml(String(data.execution.result)) + '</div>';
+                        }
+
+                        htmlOutput += '</div></div>';
+                    } else {
+                        // Fallback for different response structure
+                        htmlOutput += '<div class="result-section">';
+                        htmlOutput += '<div class="section-header">📋 Full Response</div>';
+                        htmlOutput += '<div class="result-content">';
+                        htmlOutput += '<pre class="json-result">' + escapeHtml(JSON.stringify(data, null, 2)) + '</pre>';
                         htmlOutput += '</div></div>';
                     }
 
@@ -646,14 +714,10 @@ export const htmlPage = `<!DOCTYPE html>
                     errorOutput += '<div class="error-section">';
                     errorOutput += '<div class="section-header">⚠️ Error Details</div>';
                     errorOutput += '<div class="error-content">' + escapeHtml(data.error || 'Unknown error') + '</div>';
-                    
-                    if (data.available_modules && data.available_modules.length > 0) {
-                        errorOutput += '<div class="error-help" style="margin-top: 10px;">';
-                        errorOutput += '<strong>Available modules:</strong> ';
-                        data.available_modules.forEach((mod, idx) => {
-                            if (idx > 0) errorOutput += ', ';
-                            errorOutput += escapeHtml(mod);
-                        });
+                    if (data.execution || data.context) {
+                        errorOutput += '<div class="debug-section">';
+                        errorOutput += '<div class="section-header">🔍 Debug Information</div>';
+                        errorOutput += '<pre class="debug-content">' + escapeHtml(JSON.stringify(data, null, 2)) + '</pre>';
                         errorOutput += '</div>';
                     }
                     errorOutput += '</div>';
@@ -672,6 +736,12 @@ export const htmlPage = `<!DOCTYPE html>
                 networkErrorOutput += '<div class="error-section">';
                 networkErrorOutput += '<div class="section-header">⚠️ Connection Problem</div>';
                 networkErrorOutput += '<div class="error-content">' + escapeHtml(error.message) + '</div>';
+                if (error.stack) {
+                    networkErrorOutput += '<div class="debug-section">';
+                    networkErrorOutput += '<div class="section-header">🔍 Stack Trace</div>';
+                    networkErrorOutput += '<pre class="debug-content">' + escapeHtml(error.stack) + '</pre>';
+                    networkErrorOutput += '</div>';
+                }
                 networkErrorOutput += '</div>';
                 resultElement.innerHTML = networkErrorOutput;
             } finally {
@@ -680,9 +750,13 @@ export const htmlPage = `<!DOCTYPE html>
             }
         }
 
-        // Initialize on load
+
+        // Initialize button text storage
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('LEPUS/PrimJS Module Federation Interface Loaded');
+            const buttons = document.querySelectorAll('.execute-btn');
+            buttons.forEach(button => {
+                button.setAttribute('data-original-text', button.textContent);
+            });
         });
     </script>
 </body>
