@@ -1,22 +1,21 @@
 /**
  * Module execution handler for LEPUS/PrimJS
- * Uses LEPUS to evaluate modules directly without JS eval/Function
+ * Uses PrimJS to evaluate modules directly
  */
 
 import { MODULE_FEDERATION, EXECUTION_TIMEOUTS } from './utils/constants.js';
 import { validateExecuteModuleInput, createContextualErrorResponse, ValidationError } from './utils/responseUtils.js';
 import { info, warn, error as logError, debug } from './utils/logger.js';
-import { executeRegisteredModule, moduleRegistry } from './utils/lepusUtils.js';
 
 /**
- * Handle module execution routes with LEPUS
- * @param {Object} context - Request context with LEPUS instance
+ * Handle module execution routes with PrimJS
+ * @param {Object} context - Request context
  * @returns {Promise<Response>}
  */
 export async function handleExecuteModuleRoute(context) {
-    const { request, env, corsHeaders, LEPUS } = context;
+    const { request, env, corsHeaders, PrimJS } = context;
     
-    info('[LEPUS] Module execution request received');
+    info('[LEPUS/PrimJS] Module execution request received');
     
     let requestBody = null;
     
@@ -38,52 +37,28 @@ export async function handleExecuteModuleRoute(context) {
             throw new ValidationError('Missing MODULE_FEDERATION_ASSETS in environment', ['KV namespace is required']);
         }
         
-        info(`[LEPUS] Executing pre-registered module: ${module}.${func}`);
+        info(`[LEPUS/PrimJS] Loading remote entry from KV`);
         
-        // Since we can't eval in Cloudflare Workers, use pre-registered modules
-        let result;
-        try {
-            const executionResult = executeRegisteredModule(module, func, params);
-            
-            result = {
-                success: true,
-                result: executionResult,
-                module,
-                function: func,
-                engine: 'LEPUS/PrimJS (Pre-compiled)',
-                gc_enabled: LEPUS.isGCMode(),
-                timestamp: new Date().toISOString(),
-                available_modules: Array.from(moduleRegistry.keys())
-            };
-            
-            // Run GC after execution
-            if (LEPUS.isGCMode()) {
-                LEPUS.runGC();
-                debug('[LEPUS] Garbage collection completed');
-            }
-        } catch (execError) {
-            result = {
-                success: false,
-                error: execError.message,
-                module,
-                function: func,
-                engine: 'LEPUS/PrimJS (Pre-compiled)',
-                available_modules: Array.from(moduleRegistry.keys()),
-                timestamp: new Date().toISOString()
-            };
+        // Load remoteEntry.js from KV
+        const remoteEntry = await env.MODULE_FEDERATION_ASSETS.get('remoteEntry.js', { type: 'text' });
+        if (!remoteEntry) {
+            throw new Error('Remote entry not found in KV storage');
         }
+        
+        // Execute with PrimJS
+        const result = await executePrimJSModule(PrimJS, remoteEntry, { module, func, params });
         
         return new Response(JSON.stringify(result, null, 2), {
             status: result.success ? 200 : 500,
             headers: {
                 'Content-Type': 'application/json',
                 ...corsHeaders,
-                'X-Engine': 'LEPUS-Native'
+                'X-Engine': 'LEPUS-PrimJS'
             }
         });
         
     } catch (error) {
-        logError('[LEPUS] Module execution failed:', error);
+        logError('[LEPUS/PrimJS] Module execution failed:', error);
         
         if (error instanceof ValidationError) {
             return createContextualErrorResponse(
@@ -113,19 +88,38 @@ export async function handleExecuteModuleRoute(context) {
 }
 
 /**
- * Execute a module function using LEPUS directly
- * @param {Object} LEPUS - LEPUS module instance
+ * Execute a module function using PrimJS directly
+ * @param {Object} PrimJS - PrimJS module instance
  * @param {string} remoteEntry - Remote entry JavaScript code
  * @param {Object} options - Execution options
  * @returns {Promise<Object>} - Execution result
  */
-async function executeLEPUSModule(LEPUS, remoteEntry, options) {
+async function executePrimJSModule(PrimJS, remoteEntry, options) {
     const { module, func, params } = options;
+    
+    const runtime = PrimJS.newRuntime();
+    runtime.setMemoryLimit(2 * 1024 * 1024); // 2MB for module execution
+    runtime.setMaxStackSize(256 * 1024); // 256KB stack
+    
+    // Set interrupt handler
+    let cycles = 0;
+    runtime.setInterruptHandler(() => {
+        cycles++;
+        return cycles > 10000; // More cycles for module execution
+    });
+    
+    const ctx = runtime.newContext();
     
     try {
         // First, evaluate the remote entry to set up the module system
-        debug('[LEPUS] Evaluating remote entry');
-        LEPUS.evalCode(remoteEntry);
+        debug('[LEPUS/PrimJS] Evaluating remote entry');
+        const entryResult = ctx.evalCode(remoteEntry);
+        if (entryResult.error) {
+            const error = ctx.dump(entryResult.error);
+            entryResult.error.dispose();
+            throw new Error(`Failed to load remote entry: ${error}`);
+        }
+        entryResult.value.dispose();
         
         // Now evaluate code to access and execute the specific module function
         const executionCode = `
@@ -180,16 +174,19 @@ async function executeLEPUSModule(LEPUS, remoteEntry, options) {
             })()
         `;
         
-        // Execute with LEPUS
+        // Execute with PrimJS
         const startTime = Date.now();
-        const result = LEPUS.evalCode(executionCode);
+        const execResult = ctx.evalCode(executionCode);
         const executionTime = Date.now() - startTime;
         
-        // Run garbage collection
-        if (LEPUS.isGCMode()) {
-            LEPUS.runGC();
-            debug('[LEPUS] Garbage collection completed');
+        if (execResult.error) {
+            const error = ctx.dump(execResult.error);
+            execResult.error.dispose();
+            throw new Error(error);
         }
+        
+        const result = ctx.dump(execResult.value);
+        execResult.value.dispose();
         
         // Add execution metadata
         if (result && typeof result === 'object') {
@@ -197,11 +194,11 @@ async function executeLEPUSModule(LEPUS, remoteEntry, options) {
             result.timestamp = new Date().toISOString();
         }
         
-        info(`[LEPUS] Module executed successfully in ${executionTime}ms`);
+        info(`[LEPUS/PrimJS] Module executed successfully in ${executionTime}ms`);
         return result;
         
     } catch (error) {
-        logError('[LEPUS] Module evaluation error:', error);
+        logError('[LEPUS/PrimJS] Module evaluation error:', error);
         return {
             success: false,
             error: error.message || 'Module execution failed',
@@ -210,17 +207,23 @@ async function executeLEPUSModule(LEPUS, remoteEntry, options) {
             engine: 'LEPUS/PrimJS',
             timestamp: new Date().toISOString()
         };
+    } finally {
+        ctx.dispose();
+        runtime.dispose();
     }
 }
 
 /**
- * Load and execute a module with dependencies using LEPUS
- * @param {Object} LEPUS - LEPUS module instance
+ * Load and execute a module with dependencies using PrimJS
+ * @param {Object} PrimJS - PrimJS module instance
  * @param {string} modulePath - Module path to load
  * @param {Object} kvNamespace - KV namespace for loading dependencies
  * @returns {Promise<any>} - Module exports
  */
-export async function loadModuleWithLEPUS(LEPUS, modulePath, kvNamespace) {
+export async function loadModuleWithPrimJS(PrimJS, modulePath, kvNamespace) {
+    const runtime = PrimJS.newRuntime();
+    const ctx = runtime.newContext();
+    
     try {
         // Load module code from KV
         const moduleCode = await kvNamespace.get(modulePath, { type: 'text' });
@@ -240,14 +243,25 @@ export async function loadModuleWithLEPUS(LEPUS, modulePath, kvNamespace) {
             })()
         `;
         
-        // Execute with LEPUS
-        const moduleExports = LEPUS.evalCode(wrappedCode);
+        // Execute with PrimJS
+        const result = ctx.evalCode(wrappedCode);
+        if (result.error) {
+            const error = ctx.dump(result.error);
+            result.error.dispose();
+            throw new Error(error);
+        }
         
-        debug(`[LEPUS] Module loaded: ${modulePath}`);
+        const moduleExports = ctx.dump(result.value);
+        result.value.dispose();
+        
+        debug(`[LEPUS/PrimJS] Module loaded: ${modulePath}`);
         return moduleExports;
         
     } catch (error) {
-        logError(`[LEPUS] Failed to load module ${modulePath}:`, error);
+        logError(`[LEPUS/PrimJS] Failed to load module ${modulePath}:`, error);
         throw error;
+    } finally {
+        ctx.dispose();
+        runtime.dispose();
     }
 }

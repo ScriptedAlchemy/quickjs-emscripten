@@ -90,11 +90,7 @@ export const htmlPage = `<!DOCTYPE html>
 
         <div class="content">
             <div class="section">
-                <h2>🧪 Pre-compiled Module Tests</h2>
-                <div class="precompiled-notice">
-                    <strong>⚡ Platform Note:</strong> Cloudflare Workers restricts dynamic code evaluation for security. 
-                    LEPUS/PrimJS modules are pre-compiled and registered for safe execution while maintaining garbage collection benefits.
-                </div>
+                <h2>🧪 Module Tests</h2>
                 <div class="test-grid">
                     <a href="/execute-module?module=HelloWorld&function=greet" class="test-card">
                         <h3>HelloWorld Module</h3>
@@ -146,26 +142,20 @@ export const htmlPage = `<!DOCTYPE html>
             </div>
 
             <div class="section">
-                <h2>🔧 Pre-compiled Operations</h2>
-                <p style="margin-bottom: 20px;">Execute pre-compiled operations using LEPUS/PrimJS:</p>
-                <div class="info-notice" style="background: #f1f5f9; border-left: 4px solid #4338ca; padding: 15px; margin-bottom: 20px; border-radius: 6px; color: #1e293b;">
-                    <p style="margin: 0; color: #1e293b; font-size: 0.95rem; line-height: 1.5;">
-                        <strong>🎯 Available Operations:</strong> Simple arithmetic (<code>5 + 3</code>), 
-                        math functions (<code>math.add(10, 5)</code>), 
-                        string operations (<code>string.toUpperCase("hello")</code>), 
-                        and JSON operations (<code>json.stringify({a: 1})</code>).
-                    </p>
-                </div>
+                <h2>🔧 Code Execution</h2>
+                <p style="margin-bottom: 20px;">Execute JavaScript code using LEPUS/PrimJS engine:</p>
 
                 <div class="code-executor">
                     <div class="code-input-section">
-                        <label for="user-code">Pre-compiled Operations:</label>
-                        <textarea id="user-code" placeholder="// Enter pre-compiled operations...
+                        <label for="user-code">JavaScript Code:</label>
+                        <textarea id="user-code" placeholder="// Enter JavaScript code...
 // Examples:
 // 5 + 3
-// math.multiply(4, 7)
-// string.concat('Hello', ' ', 'LEPUS')
-// json.stringify({name: 'LEPUS', gc: true})
+// Math.pow(2, 8)
+// 'Hello ' + 'LEPUS'
+// JSON.stringify({name: 'LEPUS', gc: true})
+// function factorial(n) { return n <= 1 ? 1 : n * factorial(n - 1); }
+// factorial(5)
 
 10 * 5">10 * 5</textarea>
                         <div class="code-controls">
@@ -173,7 +163,7 @@ export const htmlPage = `<!DOCTYPE html>
                             <button onclick="clearCode()" class="clear-btn">Clear</button>
                         </div>
                         <div class="sandbox-notice">
-                            🚀 <strong>LEPUS/PrimJS Engine:</strong> Garbage collection enabled. Pre-compiled operations only.
+                            🚀 <strong>LEPUS/PrimJS Engine:</strong> Full JavaScript execution with garbage collection enabled.
                         </div>
                     </div>
                     <div id="code-result" class="result-display"></div>
@@ -182,7 +172,7 @@ export const htmlPage = `<!DOCTYPE html>
 
             <div class="section">
                 <h2>🎮 Interactive Module Execution</h2>
-                <p style="margin-bottom: 20px;">Execute pre-registered LEPUS/PrimJS modules with custom parameters:</p>
+                <p style="margin-bottom: 20px;">Execute LEPUS/PrimJS modules with custom parameters:</p>
 
                 <div class="interactive-section">
                     <div class="module-executor">
@@ -250,7 +240,7 @@ export const htmlPage = `<!DOCTYPE html>
                             <pre style="background: #f1f5f9; padding: 12px; border-radius: 4px; margin-top: 5px; overflow-x: auto; color: #1e293b;"><code>{
   "success": true,
   "result": 30,
-  "engine": "LEPUS/PrimJS (Pre-compiled)",
+  "engine": "LEPUS/PrimJS",
   "gc_enabled": true,
   "execution_time_ms": 0,
   "timestamp": "2025-07-08T20:51:05.793Z",
@@ -282,7 +272,7 @@ export const htmlPage = `<!DOCTYPE html>
   "result": "Hello, LEPUS API!",
   "module": "HelloWorld",
   "function": "greet",
-  "engine": "LEPUS/PrimJS (Pre-compiled)",
+  "engine": "LEPUS/PrimJS",
   "gc_enabled": true,
   "timestamp": "2025-07-08T20:51:12.960Z",
   "available_modules": ["HelloWorld", "MathUtils", "StringUtils"]

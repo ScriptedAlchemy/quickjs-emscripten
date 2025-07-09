@@ -4,8 +4,7 @@
  */
 
 import { validateCodeInput } from './utils/responseUtils.js';
-import { info, warn, error, debug } from './utils/logger.js';
-import { createCloudflareCompatibleLEPUS } from './utils/lepusUtils.js';
+import { info, warn, error as logError, debug } from './utils/logger.js';
 
 /**
  * Execute JavaScript code using LEPUS native API
@@ -13,9 +12,9 @@ import { createCloudflareCompatibleLEPUS } from './utils/lepusUtils.js';
  * @returns {Promise<Response>}
  */
 export async function handleCodeExecution(context) {
-    const { request, LEPUS, corsHeaders } = context;
+    const { request, corsHeaders, PrimJS } = context;
     
-    info('[LEPUS] Code execution request received');
+    info('[LEPUS/PrimJS] Code execution request received');
     
     try {
         const body = await request.json();
@@ -25,117 +24,115 @@ export async function handleCodeExecution(context) {
         try {
             validateCodeInput(code);
         } catch (validationError) {
-            warn('[LEPUS] Code validation failed:', validationError.message);
+            warn('[LEPUS/PrimJS] Code validation failed:', validationError.message);
             return new Response(JSON.stringify({
                 error: validationError.message,
-                engine: 'LEPUS/PrimJS (Native)'
+                engine: 'LEPUS/PrimJS'
             }), {
                 status: 400,
                 headers: { 'Content-Type': 'application/json', ...corsHeaders }
             });
         }
         
-        info('[LEPUS] Processing code request');
+        info('[LEPUS/PrimJS] Executing code with PrimJS');
         const startTime = Date.now();
         
+        // Create PrimJS runtime
+        const runtime = PrimJS.newRuntime();
+        
+        // Set memory and stack limits
+        runtime.setMemoryLimit(1024 * 1024); // 1MB memory limit
+        runtime.setMaxStackSize(1024 * 128); // 128KB stack limit
+        
+        // Set interrupt handler for timeout
+        let cycles = 0;
+        runtime.setInterruptHandler(() => {
+            cycles++;
+            return cycles > 5000; // ~2-5 seconds execution time
+        });
+        
+        const ctx = runtime.newContext();
+        
         try {
-            // Create Cloudflare-compatible LEPUS wrapper
-            const compatibleLEPUS = createCloudflareCompatibleLEPUS(LEPUS);
+            // Add console.log support
+            const logs = [];
+            const consoleLog = ctx.newFunction('log', (...args) => {
+                const nativeArgs = args.map(arg => ctx.dump(arg));
+                logs.push(nativeArgs.join(' '));
+            });
+            const consoleProp = ctx.newObject();
+            ctx.setProp(consoleProp, 'log', consoleLog);
+            ctx.setProp(ctx.global, 'console', consoleProp);
+            consoleLog.dispose();
+            consoleProp.dispose();
             
-            // Try to parse the code as a simple expression
-            let result;
+            // Execute the code
+            const result = ctx.evalCode(code);
             
-            // Check for simple arithmetic
-            const arithmeticMatch = code.match(/^\s*(\d+(?:\.\d+)?)\s*([\+\-\*\/])\s*(\d+(?:\.\d+)?)\s*$/);
-            if (arithmeticMatch) {
-                const [, a, op, b] = arithmeticMatch;
-                const num1 = parseFloat(a);
-                const num2 = parseFloat(b);
+            if (result.error) {
+                const errorValue = ctx.dump(result.error);
+                result.error.dispose();
                 
-                switch (op) {
-                    case '+': result = compatibleLEPUS.math.add(num1, num2); break;
-                    case '-': result = compatibleLEPUS.math.subtract(num1, num2); break;
-                    case '*': result = compatibleLEPUS.math.multiply(num1, num2); break;
-                    case '/': result = compatibleLEPUS.math.divide(num1, num2); break;
-                }
+                const executionTime = Date.now() - startTime;
+                return new Response(JSON.stringify({
+                    success: false,
+                    error: errorValue,
+                    engine: 'LEPUS/PrimJS',
+                    gc_enabled: true,
+                    execution_time_ms: executionTime,
+                    logs: logs.length > 0 ? logs : undefined,
+                    timestamp: new Date().toISOString()
+                }), {
+                    status: 200,
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        ...corsHeaders,
+                        'X-Engine': 'LEPUS-PrimJS',
+                        'X-Execution-Time': `${executionTime}ms`
+                    }
+                });
             }
-            // Check for pre-defined function calls
-            else if (code.includes('(') && code.includes(')')) {
-                // Parse function call like "math.add(5, 3)"
-                const funcMatch = code.match(/^(\w+)\.(\w+)\((.*)\)$/);
-                if (funcMatch) {
-                    const [, category, method, argsStr] = funcMatch;
-                    const args = argsStr.split(',').map(arg => {
-                        const trimmed = arg.trim();
-                        // Try to parse as number
-                        const num = parseFloat(trimmed);
-                        return isNaN(num) ? trimmed.replace(/['"]/g, '') : num;
-                    });
-                    
-                    result = compatibleLEPUS.execute(`${category}.${method}`, ...args);
-                } else {
-                    throw new Error('Complex code evaluation not supported in Cloudflare Workers. Use pre-defined operations.');
-                }
-            }
-            // Return the code as-is for simple values
-            else {
-                result = code.trim();
-            }
+            
+            const resultValue = ctx.dump(result.value);
+            result.value.dispose();
             
             const executionTime = Date.now() - startTime;
             
-            info(`[LEPUS] Code processed successfully in ${executionTime}ms`);
+            info(`[LEPUS/PrimJS] Code executed successfully in ${executionTime}ms`);
             
             return new Response(JSON.stringify({
                 success: true,
-                result,
-                engine: 'LEPUS/PrimJS (Pre-compiled)',
-                gc_enabled: LEPUS.isGCMode(),
+                result: resultValue,
+                engine: 'LEPUS/PrimJS',
+                gc_enabled: true,
                 execution_time_ms: executionTime,
-                timestamp: new Date().toISOString(),
-                note: 'Cloudflare Workers restricts dynamic code evaluation. Using pre-compiled operations.'
+                logs: logs.length > 0 ? logs : undefined,
+                timestamp: new Date().toISOString()
             }), {
                 status: 200,
                 headers: { 
                     'Content-Type': 'application/json', 
                     ...corsHeaders,
-                    'X-Engine': 'LEPUS-Native',
+                    'X-Engine': 'LEPUS-PrimJS',
                     'X-Execution-Time': `${executionTime}ms`
                 }
             });
-        } catch (evalError) {
-            const executionTime = Date.now() - startTime;
-            error('[LEPUS] Code processing error:', evalError);
-            
-            return new Response(JSON.stringify({
-                success: false,
-                error: evalError.message || 'Code processing failed',
-                engine: 'LEPUS/PrimJS (Pre-compiled)',
-                gc_enabled: LEPUS.isGCMode(),
-                execution_time_ms: executionTime,
-                timestamp: new Date().toISOString(),
-                hint: 'Try simple arithmetic (e.g., "5 + 3") or pre-defined functions (e.g., "math.add(5, 3)")'
-            }), {
-                status: 500,
-                headers: { 
-                    'Content-Type': 'application/json', 
-                    ...corsHeaders,
-                    'X-Engine': 'LEPUS-Native'
-                }
-            });
+        } finally {
+            ctx.dispose();
+            runtime.dispose();
         }
     } catch (error) {
-        error('[LEPUS] Request processing error:', error);
+        logError('[LEPUS/PrimJS] Request processing error:', error);
         return new Response(JSON.stringify({
             error: error.message || 'Failed to process request',
-            engine: 'LEPUS/PrimJS (Native)',
+            engine: 'LEPUS/PrimJS',
             timestamp: new Date().toISOString()
         }), {
             status: 400,
             headers: { 
                 'Content-Type': 'application/json', 
                 ...corsHeaders,
-                'X-Engine': 'LEPUS-Native'
+                'X-Engine': 'LEPUS-PrimJS'
             }
         });
     }
